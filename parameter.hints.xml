@@ -1,0 +1,9 @@
+<application>
+  <component name="ParameterNameHintsSettings">
+    <blacklists>
+      <blacklist language="Java">
+        <added pattern="android.support.v4.widget.DrawerLayout.isDrawerOpen(drawerGravity)" />
+      </blacklist>
+    </blacklists>
+  </component>
+</application>

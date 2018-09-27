@@ -1,0 +1,11 @@
+<application>
+  <component name="UISettings">
+    <option name="FONT_FACE" value="Segoe UI Semibold" />
+    <option name="FONT_SCALE" value="1.25" />
+    <option name="FONT_SIZE" value="16" />
+    <option name="HIDE_TOOL_STRIPES" value="false" />
+    <option name="MAX_LOOKUP_WIDTH2" value="975" />
+    <option name="OVERRIDE_NONIDEA_LAF_FONTS" value="true" />
+    <option name="PRESENTATION_MODE_FONT_SIZE" value="26" />
+  </component>
+</application>
