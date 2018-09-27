@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MyNews</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="search">Search</string>
+    <string name="param">Parameters</string>
+
+    <string name="categories">Categories</string>
+    <string name="Top_Stories">Top Stories</string>
+    <string name="Most_popular">Most popular</string>
+    <string name="Business">Business</string>
+
+    <string name="News_image">News image</string>
+</resources>
