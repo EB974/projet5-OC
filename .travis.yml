@@ -1,9 +1,17 @@
 language: android
+android:
+  components:
+    - android-27
+    - build-tools-27.0.3
 
-jdk: oraclejdk7
+env:
+  global:
+   # install timeout in minutes (2 minutes by default)
+    - ADB_INSTALL_TIMEOUT=8
 
-android: components:
-- build-tools-19.0.1
+before_install:
+    - echo yes | sdkmanager "build-tools;27.0.3"
 
-install:
-- true script: TERM=dumb ./gradlew assembleDebug
+# Run assemble and unit tests
+script:
+  - ./gradlew clean assembleDebug assembleRelease testDebug
