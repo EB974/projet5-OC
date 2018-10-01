@@ -2,7 +2,7 @@ language: android
 android:
   components:
     - android-27
-    - build-tools-27.0.3
+    - build-tools-27.1.1
 
 env:
   global:
@@ -10,7 +10,7 @@ env:
     - ADB_INSTALL_TIMEOUT=8
 
 before_install:
-    - echo yes | sdkmanager "build-tools;27.0.3"
+    - echo yes | sdkmanager "build-tools;27.1.1"
 
 # Run assemble and unit tests
 script:
