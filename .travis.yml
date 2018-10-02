@@ -32,10 +32,10 @@ before_script:
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
 
-#  Run assemble and unit tests
+#  Run assemble and unit   tests
 script:
   - chmod +x ./gradlew  
   #- chmod +x./gradlew clean assembleDebug assembleRelease testDebug
   - ./gradlew clean
   - ./gradlew assembleDebug
-- ./gradlew assembleDebugAndroidTest
+  - ./gradlew assembleDebugAndroidTest
