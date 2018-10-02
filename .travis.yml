@@ -38,4 +38,4 @@ script:
   #- chmod +x./gradlew clean assembleDebug assembleRelease testDebug
   - ./gradlew clean
   - ./gradlew assembleDebug
-- ./gradlew assembleDebugAndroidTest
+  - ./gradlew assembleDebugAndroidTest
