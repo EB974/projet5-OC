@@ -10,7 +10,7 @@ env:
     - ADB_INSTALL_TIMEOUT=8
 
 before_install:
-    - echo yes | sdkmanager "build-tools;27.1.1"
+    - echo yes | sdkmanager "build-tools;27.0.3"
 
 # Run assemble and unit tests
 script:
