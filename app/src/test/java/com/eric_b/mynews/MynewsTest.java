@@ -1,17 +1,8 @@
 package com.eric_b.mynews;
 
-import com.eric_b.mynews.models.TopStoriePojo;
-import com.eric_b.mynews.utils.TimesStream;
-import com.eric_b.mynews.views.NewsAdapter;
-
+import android.annotation.SuppressLint;
+import com.eric_b.mynews.utils.DateAdapter;
 import org.junit.Test;
-
-import io.reactivex.Observable;
-import io.reactivex.observers.TestObserver;
-
-import static com.eric_b.mynews.views.NewsAdapter.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.junit.Assert.*;
 
 /**
@@ -21,8 +12,17 @@ import static org.junit.Assert.*;
  */
 public class MynewsTest {
     @Test
-    public void dateApaterTest() {
-        assertEquals("2018-05-25 06:42", NewsAdapter.dateAdapter("2018-05-25T06:42:57-04:00"));
+    public void getDateTopStoriesTest() {
+        assertEquals("2018-05-25 06:42", DateAdapter.getDateTopStories("2018-05-25T06:42:57-04:00"));
     }
 
+
+    @Test
+    public void getDateMostpopularTest() {
+        String format = "yyyy-MM-dd";
+        @SuppressLint("SimpleDateFormat") java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+        java.util.Date date = new java.util.Date();
+        String dayNewsDate = formater.format(date);
+        assertEquals("today", DateAdapter.getDateMostPopular(dayNewsDate));
+    }
 }
