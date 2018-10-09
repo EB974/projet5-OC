@@ -162,7 +162,6 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
                 break;
             case FRAGMENT_POPULAR:
                 this.showPopularFragment();
-                Log.d(TAG,"showFragment");
                 break;
             case FRAGMENT_BUSSINESS:
                 this.showBusinessFragment();
@@ -185,7 +184,6 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     private void showPopularFragment(){
         if (this.fragmentPopular == null) this.fragmentPopular = new MostPopularFragment();
         this.startTransactionFragment(this.fragmentPopular,"MostPopular");
-        Log.d(TAG,"showPopularFragment");
         configureViewPagerAndTabs(1);
     }
 
