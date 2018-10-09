@@ -1,7 +1,5 @@
 package com.eric_b.mynews;
 
-import android.util.Log;
-
 import com.eric_b.mynews.models.MostPopularPojo;
 import com.eric_b.mynews.models.TopStoriePojo;
 import com.eric_b.mynews.utils.TimesStream;
