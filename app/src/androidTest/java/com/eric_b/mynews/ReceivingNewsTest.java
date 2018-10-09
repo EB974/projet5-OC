@@ -46,5 +46,20 @@ public class ReceivingNewsTest {
 
     }
 
+    @Test
+    public void streamFetchBusinessTest() throws Exception {
+        //1 - Get the stream
+        Observable<TopStoriePojo> observableNews = TimesStream.streamFetchTopStorieNews("business");
+        //2 - Create a new TestObserver
+        TestObserver<TopStoriePojo> testObserver = new TestObserver<>();
+        //3 - Launch observable
+        observableNews.subscribeWith(testObserver)
+                .assertNoErrors()
+                .assertNoTimeout()
+                .awaitTerminalEvent();
 
+        TopStoriePojo newsFetched = testObserver.values().get(0);
+        assertThat("Business receive news.",newsFetched.getNumResults() > 0);
+
+    }
 }

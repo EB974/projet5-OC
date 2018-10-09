@@ -1,6 +1,5 @@
 package com.eric_b.mynews.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -18,13 +17,13 @@ import com.eric_b.mynews.utils.DateAdapter;
 
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
+public class TopStorieAdapter extends RecyclerView.Adapter<TopStorieAdapter.ViewHolder> {
 
     private List<TopStorieResult> mItems;
     private PostItemListener mItemListener;
     private RequestManager glide;
 
-    public NewsAdapter(List<TopStorieResult> results, RequestManager glide, PostItemListener itemListener) {
+    public TopStorieAdapter(List<TopStorieResult> results, RequestManager glide, PostItemListener itemListener) {
         mItemListener = itemListener;
         mItems = results;
         this.glide = glide;
@@ -62,7 +61,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public NewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TopStorieAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View postView = inflater.inflate(R.layout.news_item, parent, false);
@@ -70,7 +69,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TopStorieAdapter.ViewHolder holder, int position) {
         TopStorieResult item = mItems.get(position);
         List<Multimedium> multimediaItems = item.getMultimedia();
         try {
