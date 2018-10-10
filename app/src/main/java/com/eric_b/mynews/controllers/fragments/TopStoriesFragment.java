@@ -3,7 +3,6 @@ package com.eric_b.mynews.controllers.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,10 +14,10 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.eric_b.mynews.R;
-import com.eric_b.mynews.models.Result;
+import com.eric_b.mynews.models.TopStorieResult;
 import com.eric_b.mynews.models.TopStoriePojo;
 import com.eric_b.mynews.utils.TimesStream;
-import com.eric_b.mynews.views.NewsAdapter;
+import com.eric_b.mynews.views.TopStorieAdapter;
 import com.eric_b.mynews.views.NewsWebView;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -31,7 +30,7 @@ import io.reactivex.observers.DisposableObserver;
 
 
 
-public class TopStoriesFragment extends BaseFragment implements NewsAdapter.Listeners {
+public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter.Listeners {
 
 
     @BindView(R.id.topstories_recycler_view) RecyclerView mRecyclerView;
@@ -40,7 +39,7 @@ public class TopStoriesFragment extends BaseFragment implements NewsAdapter.List
     @State Bundle memory;
 
     private Disposable disposable;
-    private NewsAdapter mAdapter;
+    private TopStorieAdapter mAdapter;
     private final String NEWS_URL = "News_URL";
     private int recoverPosition;
     private static final String TAG = TopStoriesFragment.class.getSimpleName();
@@ -56,7 +55,7 @@ public class TopStoriesFragment extends BaseFragment implements NewsAdapter.List
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        int lastFirstVisiblePosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        int lastFirstVisiblePosition = ((LinearLayoutManager) Objects.requireNonNull(mRecyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
         outState.putInt("POSITION",lastFirstVisiblePosition);
         Log.d(TAG, "onSaveInstanceState() called with: outState = [" + outState + "]");
     }
@@ -97,7 +96,7 @@ public class TopStoriesFragment extends BaseFragment implements NewsAdapter.List
     }
 
     private void configureRecyclerView(){
-        this.mAdapter = new NewsAdapter( new ArrayList<Result>(0), Glide.with(this), new NewsAdapter.PostItemListener() {
+        this.mAdapter = new TopStorieAdapter( new ArrayList<TopStorieResult>(0), Glide.with(this), new TopStorieAdapter.PostItemListener() {
 
             @Override
             public void onPostClick(String url) {
@@ -125,7 +124,7 @@ public class TopStoriesFragment extends BaseFragment implements NewsAdapter.List
     }
 
     private void loadAnswers() {
-        this.disposable = TimesStream.streamFetchNews("home").subscribeWith(new DisposableObserver <TopStoriePojo>() {
+        this.disposable = TimesStream.streamFetchTopStorieNews("home").subscribeWith(new DisposableObserver <TopStoriePojo>() {
 
             @Override
             public void onNext(TopStoriePojo response) {
@@ -152,7 +151,7 @@ public class TopStoriesFragment extends BaseFragment implements NewsAdapter.List
     private void updateUI(){
         swipeRefreshLayout.setRefreshing(false);
         mAdapter.notifyDataSetChanged();
-        mRecyclerView.getLayoutManager().scrollToPosition(recoverPosition);
+        Objects.requireNonNull(mRecyclerView.getLayoutManager()).scrollToPosition(recoverPosition);
         recoverPosition = 0;
     }
 

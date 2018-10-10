@@ -13,4 +13,7 @@
     <string name="Business">Business</string>
 
     <string name="News_image">News image</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Help">Help</string>
+    <string name="About">About</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.eric_b.mynews.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,16 +12,19 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.eric_b.mynews.R;
 import com.eric_b.mynews.models.Multimedium;
-import com.eric_b.mynews.models.Result;
+import com.eric_b.mynews.models.TopStorieResult;
+import com.eric_b.mynews.utils.DateAdapter;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
+public class BusinessAdapter extends RecyclerView.Adapter<BusinessAdapter.ViewHolder> {
 
-    private List<Result> mItems;
+    private List<TopStorieResult> mItems;
     private PostItemListener mItemListener;
     private RequestManager glide;
 
-    public NewsAdapter(List<Result> results, RequestManager glide, PostItemListener itemListener) {
+    public BusinessAdapter(ArrayList<TopStorieResult> results, RequestManager glide, PostItemListener itemListener) {
         mItemListener = itemListener;
         mItems = results;
         this.glide = glide;
@@ -51,7 +53,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         @Override
         public void onClick(View view) {
-            Result item = getResults(getAdapterPosition());
+            TopStorieResult item = getResults(getAdapterPosition());
             this.mItemListener.onPostClick(item.getShortUrl());
             notifyDataSetChanged();
         }
@@ -60,7 +62,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public NewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BusinessAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View postView = inflater.inflate(R.layout.news_item, parent, false);
@@ -68,8 +70,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NewsAdapter.ViewHolder holder, int position) {
-        Result item = mItems.get(position);
+    public void onBindViewHolder(@NonNull BusinessAdapter.ViewHolder holder, int position) {
+        TopStorieResult item = mItems.get(position);
         List<Multimedium> multimediaItems = item.getMultimedia();
         try {
             Multimedium multimedia = multimediaItems.get(0);
@@ -83,7 +85,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         newsTitle = holder.titleTv;
         newsDate = holder.dateTv;
         newsTitle.setText(item.getTitle());
-        newsDate.setText(dateAdapter(item.getUpdatedDate()));
+        newsDate.setText(DateAdapter.getDateTopStories(item.getUpdatedDate()));
     }
 
     @Override
@@ -91,34 +93,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         return mItems.size();
     }
 
-    public void updateAnswers(List<Result> items) {
+    public void updateAnswers(List<TopStorieResult> items) {
         mItems = items;
         notifyDataSetChanged();
     }
 
-    private Result getResults(int adapterPosition) {
+    private TopStorieResult getResults(int adapterPosition) {
         return mItems.get(adapterPosition);
     }
 
     public interface PostItemListener {
         void onPostClick(String url);
-    }
-
-    public static String dateAdapter(String newsDate){
-        String mDate = newsDate;
-        String mDay = mDate.substring(0,10);
-
-        String format = "yyyy-MM-dd";
-        @SuppressLint("SimpleDateFormat") java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat( format );
-        java.util.Date date = new java.util.Date();
-        String dayNewsDate = formater.format(date);
-
-        if(dayNewsDate.equals(mDay)){
-            mDay = "today";
-        };
-
-        newsDate = mDay+" "+mDate.substring(11,16);
-        return newsDate;
     }
 
 }

@@ -40,6 +40,7 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     private static final int FRAGMENT_TOP = 0;
     private static final int FRAGMENT_POPULAR = 1;
     private static final int FRAGMENT_BUSSINESS = 2;
+    private static final String TAG = MynewsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
                 this.showFragment(FRAGMENT_TOP);
                 break;
             case R.id.activity_mynews_drawer_mostpopular:
+                Log.d(TAG,"onNavigationItemSelected");
                 this.showFragment(FRAGMENT_POPULAR);
                 break;
             case R.id.activity_mynews_drawer_business:
