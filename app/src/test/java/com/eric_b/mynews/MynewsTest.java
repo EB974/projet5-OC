@@ -1,6 +1,8 @@
 package com.eric_b.mynews;
 
 import android.annotation.SuppressLint;
+
+import com.eric_b.mynews.utils.CastDateSearch;
 import com.eric_b.mynews.utils.DateAdapter;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -28,6 +30,7 @@ public class MynewsTest {
 
     @Test
     public void castDateSearchTest() {
-        assertEquals("20180525", CastDateSearch(2018,05,25));
+        assertEquals("20180525", new CastDateSearch(2018,05,25).getDateSearch());
     }
+
 }
