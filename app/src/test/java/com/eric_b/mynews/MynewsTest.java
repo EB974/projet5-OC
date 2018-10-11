@@ -25,4 +25,9 @@ public class MynewsTest {
         String dayNewsDate = formater.format(date);
         assertEquals("today", DateAdapter.getDateMostPopular(dayNewsDate));
     }
+
+    @Test
+    public void castDateSearchTest() {
+        assertEquals("20180525", CastDateSearch(2018,05,25));
+    }
 }
