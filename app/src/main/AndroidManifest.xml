@@ -18,7 +18,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.NewsWebView"></activity>
+        <activity android:name=".views.NewsWebView" />
+        <activity
+            android:name=".controllers.activity.SearchActivity"
+            android:label="Search Articles"
+            android:parentActivityName=".controllers.activity.MynewsActivity" >
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controllers.activity.MynewsActivity"/>
+        </activity>
     </application>
 
 </manifest>

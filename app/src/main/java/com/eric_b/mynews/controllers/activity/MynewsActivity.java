@@ -1,6 +1,7 @@
 package com.eric_b.mynews.controllers.activity;
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.eric_b.mynews.controllers.fragments.BusinessFragment;
 import com.eric_b.mynews.controllers.fragments.MostPopularFragment;
@@ -86,13 +88,11 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // 4 - Handle Navigation Item Click
-        int id = item.getItemId();
-        switch (id){
+        switch (item.getItemId()){
             case R.id.activity_mynews_drawer_topstories :
                 this.showFragment(FRAGMENT_TOP);
                 break;
             case R.id.activity_mynews_drawer_mostpopular:
-                Log.d(TAG,"onNavigationItemSelected");
                 this.showFragment(FRAGMENT_POPULAR);
                 break;
             case R.id.activity_mynews_drawer_business:
@@ -106,6 +106,29 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //3 - Handle actions on menu items
+        switch (item.getItemId()) {
+            case R.id.menu_activity_mynews_search:
+                startShearActivity();
+                return true;
+            case R.id.menu_activity_mynews_notifications:
+                Toast.makeText(this, "Notif", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.menu_activity_mynews_help:
+                Toast.makeText(this, "Help", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.menu_activity_mynews_about:
+                Toast.makeText(this, "About", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
+    @Override
     public boolean onMenuOpened(int featureId, Menu menu) {
         return super.onMenuOpened(featureId, menu);
     }
@@ -116,7 +139,7 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
 
     // 1 - Configure Toolbar
     private void configureToolBar(){
-        this.toolbar = findViewById(R.id.activity_mynews_toolbar);
+        this.toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
@@ -203,6 +226,15 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.activity_mynews_frame_layout, fragment,nameFragment).commit();
         }
+    }
+
+//-------------------
+    //Start Activities
+//----------------------
+
+    private void startShearActivity(){
+        Intent intent = new Intent(MynewsActivity.this, SearchActivity.class);
+        this.startActivity(intent);
     }
 
 

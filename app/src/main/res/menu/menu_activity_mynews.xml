@@ -11,19 +11,19 @@
     </item>
 
     <item
-        android:id="@+id/notifications"
+        android:id="@+id/menu_activity_mynews_notifications"
         android:title="Notifications"
         app:showAsAction="withText">
     </item>
 
     <item
-        android:id="@+id/help"
+        android:id="@+id/menu_activity_mynews_help"
         android:title="@string/Help"
         app:showAsAction="never" >
     </item>
 
     <item
-        android:id="@+id/about"
+        android:id="@+id/menu_activity_mynews_about"
         android:title="@string/About"
         app:showAsAction="never" >
     </item>
