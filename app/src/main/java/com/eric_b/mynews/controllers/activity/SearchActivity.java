@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.eric_b.mynews.R;
+import com.eric_b.mynews.utils.CastDateSearch;
 
 import java.text.BreakIterator;
 import java.util.Calendar;
@@ -33,18 +34,18 @@ public class SearchActivity extends AppCompatActivity {
     Button mSearchButton;
     //@BindView(R.id.date_begin_editText) EditText mDateBegin;
 
-    @BindView(R.id.date_end_editText)
-    EditText mDateEnd;
     private String deskValues;
     private static String mDateBeginSearch;
     private static String dateSet;
     private static EditText mDateBegin;
+    private static EditText mDateEnd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         mDateBegin = findViewById(R.id.date_begin_editText);
+        mDateEnd = findViewById(R.id.date_end_editText);
         this.configureToolbar();
     }
 
@@ -108,19 +109,29 @@ public class SearchActivity extends AppCompatActivity {
             // Do something with the date chosen by the user
             Log.d("SearchAct","tag "+"datePicker");
             if (dateSet=="Begin") setBeginDate(day,month,year);
-            Log.d("SearchAct","dateSet "+dateSet);
+            else setEndDate(day,month,year);
         }
 
         private void setBeginDate(int day, int month, int year) {
             mDateBegin.setText(day+"/"+month+"/"+year);
-            mDateBeginSearch = String.format("tYtmtd", year, month, day);
-            Log.d("SearchAct","mDateBeginSearch "+mDateBeginSearch);
+
+            Log.d("SearchAct","mDateBeginSearch "+ new CastDateSearch(year,month,day).getDateSearch());
             dateSet = "";
+        }
+
+        private void setEndDate(int day, int month, int year) {
+            mDateEnd.setText(day+"/"+month+"/"+year);
+
+            Log.d("SearchAct","mDateEEndSearch "+ new CastDateSearch(year,month,day).getDateSearch());
         }
     }
 
     public void showDateBeginPickerDialog(View v) {
         dateSet = "Begin";
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+    public void showDateEndPickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }

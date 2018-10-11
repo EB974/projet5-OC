@@ -49,7 +49,7 @@
             android:id="@+id/date_begin_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="7"
+            android:ems="6"
             android:inputType="date"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="120dp"
+            android:layout_marginStart="110dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/baseline_arrow_drop_down_black_24dp"
             android:onClick="showDateBeginPickerDialog"/>
@@ -68,11 +68,20 @@
             android:id="@+id/date_end_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="7"
+            android:ems="6"
             android:inputType="date"
             android:layout_alignParentTop="true"
             android:layout_marginStart="200dp"
             android:layout_marginTop="10dp"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="300dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/baseline_arrow_drop_down_black_24dp"
+            android:onClick="showDateEndPickerDialog"/>
 
         <CheckBox
             android:id="@+id/art_checkbox"
