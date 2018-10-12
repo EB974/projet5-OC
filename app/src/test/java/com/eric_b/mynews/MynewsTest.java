@@ -30,10 +30,12 @@ public class MynewsTest {
 
     @Test
     public void castDateSearchTest() {
-        assertEquals("20180525", new CastDateSearch(2018,05,25).getDateSearch());
+        new CastDateSearch(2018, 5, 25);
+        assertEquals("20180525", CastDateSearch.getDateSearch());
     }
     @Test
     public void castDateTest() {
-        assertEquals("25/05/2018", new CastDateSearch(2018,05,25).getDate());
+        new CastDateSearch(2018, 5, 25);
+        assertEquals("25/05/2018", CastDateSearch.getDate());
     }
 }
