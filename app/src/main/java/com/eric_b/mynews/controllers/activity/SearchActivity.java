@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 
 import android.view.View;
 import android.widget.Button;
@@ -25,21 +24,24 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.eric_b.mynews.R;
+import com.eric_b.mynews.models.search.SearchPojo;
 import com.eric_b.mynews.utils.CastDateSearch;
+import com.eric_b.mynews.utils.TimesStream;
 
 import java.util.Calendar;
 import java.util.Objects;
 
+import io.reactivex.observers.DisposableObserver;
+
+
 
 public class SearchActivity extends AppCompatActivity {
-    private static final String SEARCH_CODE = "StringCode";
 
     //@BindView(R.id.search_activity_term_input) EditText mImputShearch;
     //@BindView(R.id.search_button) Button mSearchButton;
     //@BindView(R.id.date_begin_editText) EditText mDateBegin;
 
     private String searchCategory;
-    private static String mDateBeginSearch;
     private static String dateSet;
     @SuppressLint("StaticFieldLeak")
     private static EditText mDateBegin;
@@ -48,15 +50,11 @@ public class SearchActivity extends AppCompatActivity {
     private static String mDBegin;
     private static String mDEnd;
     private Button mSearchButton;
-    private EditText mImputSearch;
+    private EditText mImputEditText;
     private String mMessage;
     View mView;
-    private CheckBox chkArt;
-    private CheckBox chkBusiness;
-    private CheckBox chkPolitics;
-    private CheckBox chkSport;
-    private CheckBox chkEnvironment;
-    private CheckBox chkTravel;
+
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -65,12 +63,12 @@ public class SearchActivity extends AppCompatActivity {
 
         mDateBegin = findViewById(R.id.date_begin_editText);
         mDateEnd = findViewById(R.id.date_end_editText);
-        mImputSearch = findViewById(R.id.search_activity_term_input);
+        mImputEditText = findViewById(R.id.search_activity_term_input);
         mSearchButton = findViewById(R.id.search_button);
         mSearchButton.setEnabled(false);
         this.configureToolbar();
 
-        mImputSearch.addTextChangedListener(new TextWatcher() {
+        mImputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -83,7 +81,6 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -97,12 +94,12 @@ public class SearchActivity extends AppCompatActivity {
 
     private void readCheckbox(){
         searchCategory = "";
-        chkArt = findViewById(R.id.art_checkbox);
-        chkBusiness = findViewById(R.id.business_checkbox);
-        chkEnvironment = findViewById(R.id.environment_checkbox);
-        chkPolitics = findViewById(R.id.politics_checkbox);
-        chkSport = findViewById(R.id.sport_checkbox);
-        chkTravel = findViewById(R.id.travel_checkbox);
+        CheckBox chkArt = findViewById(R.id.art_checkbox);
+        CheckBox chkBusiness = findViewById(R.id.business_checkbox);
+        CheckBox chkEnvironment = findViewById(R.id.environment_checkbox);
+        CheckBox chkPolitics = findViewById(R.id.politics_checkbox);
+        CheckBox chkSport = findViewById(R.id.sport_checkbox);
+        CheckBox chkTravel = findViewById(R.id.travel_checkbox);
         if (chkArt.isChecked()) searchCategory = "Art";
         if (chkBusiness.isChecked()) searchCategory = searchCategory + " Business";
         if (chkPolitics.isChecked()) searchCategory = searchCategory + " Politics";
@@ -197,11 +194,36 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchArticle(){
-        //Intent intent = new Intent(SearchActivity.this,ResultActivity.class);
-       // startActivity(intent);
-        Log.d("SearchAct","deskValue "+ searchCategory);
+
+        DisposableObserver<SearchPojo> disposable = TimesStream.streamFetchSearchNews("newest",searchCategory,mImputEditText.getText().toString(),mDBegin,mDEnd).subscribeWith(new DisposableObserver <SearchPojo>() {
+            @Override
+            public void onNext(SearchPojo response) {
+
+                if (response.getResponse().getMeta().getHits() > 0) {
+                    Intent intent = new Intent(SearchActivity.this, ResultActivity.class);
+                    intent.putExtra("inputTerm", mImputEditText.getText().toString());
+                    intent.putExtra("searchCategory", searchCategory);
+                    intent.putExtra("dateBegin", mDBegin);
+                    intent.putExtra("dateEnd", mDEnd);
+                    startActivity(intent);
+                }
+                else {
+                    mMessage = "No articles containing your search were found";
+                    showAlertDialogButtonClicked(mView);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mMessage = "No articles containing your search were found";
+                showAlertDialogButtonClicked(mView);
+            }
+
+            @Override
+            public void onComplete() { }
+        });
+
+
     }
-
-
 
 }

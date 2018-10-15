@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface SearchService {
 
     @GET("svc/search/v2/articlesearch.json?api-key=571bed2a4b0d429380eca6b006c553d3")
-    Observable<SearchPojo> getNews(@Query("fq") String category, @Query("q") String term, @Query("begin_date") String beginDate, @Query("end_date") String endDate);
+    Observable<SearchPojo> getNews(@Query("sort") String sort, @Query("fq") String category, @Query("q") String term, @Query("begin_date") String beginDate, @Query("end_date") String endDate);
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://api.nytimes.com/")

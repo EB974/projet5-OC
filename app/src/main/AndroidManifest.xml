@@ -22,12 +22,21 @@
         <activity
             android:name=".controllers.activity.SearchActivity"
             android:label="Search Articles"
-            android:parentActivityName=".controllers.activity.MynewsActivity" >
+            android:parentActivityName=".controllers.activity.MynewsActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controllers.activity.MynewsActivity"/>
+                android:value=".controllers.activity.MynewsActivity" />
+        </activity>
+        <activity android:name=".controllers.activity.ResultActivity"
+            android:label="Results"
+            android:parentActivityName=".controllers.activity.MynewsActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controllers.activity.MynewsActivity" />
         </activity>
     </application>
 

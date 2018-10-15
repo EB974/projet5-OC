@@ -13,7 +13,10 @@ public class DateAdapter {
 
 
     public static String getDateTopStories(String publishedDate){
-        String mDate = publishedDate;
+        if (publishedDate != null) mDate = publishedDate;
+        else {
+            return mDate;
+        }
         String mDay = mDate.substring(0,10);
 
         String format = "yyyy-MM-dd";
@@ -30,7 +33,10 @@ public class DateAdapter {
 
 
     public static String getDateMostPopular(String publishedDate) {
-        mDate = publishedDate;
+        if (publishedDate != null) mDate = publishedDate;
+        else {
+            return mDate;
+        }
         mDay = mDate.substring(0, 10);
 
         String format = "yyyy-MM-dd";
