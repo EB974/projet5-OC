@@ -1,6 +1,7 @@
-package com.eric_b.mynews.models;
+package com.eric_b.mynews.models.topstories;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

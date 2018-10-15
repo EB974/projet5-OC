@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.eric_b.mynews.R;
-import com.eric_b.mynews.models.Multimedium;
-import com.eric_b.mynews.models.TopStorieResult;
+import com.eric_b.mynews.models.topstories.TopStoriesMultimedium;
+import com.eric_b.mynews.models.topstories.TopStorieResult;
 import com.eric_b.mynews.utils.DateAdapter;
 
 import java.util.List;
@@ -71,9 +71,9 @@ public class TopStorieAdapter extends RecyclerView.Adapter<TopStorieAdapter.View
     @Override
     public void onBindViewHolder(@NonNull TopStorieAdapter.ViewHolder holder, int position) {
         TopStorieResult item = mItems.get(position);
-        List<Multimedium> multimediaItems = item.getMultimedia();
+        List<TopStoriesMultimedium> multimediaItems = item.getMultimedia();
         try {
-            Multimedium multimedia = multimediaItems.get(0);
+            TopStoriesMultimedium multimedia = multimediaItems.get(0);
             glide.load(multimedia.getUrl()).apply(RequestOptions.noTransformation()).into(holder.imageTv);
         } catch (Throwable e) {
             e.printStackTrace();

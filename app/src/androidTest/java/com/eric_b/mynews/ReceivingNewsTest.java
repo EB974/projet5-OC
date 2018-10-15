@@ -1,7 +1,8 @@
 package com.eric_b.mynews;
 
-import com.eric_b.mynews.models.MostPopularPojo;
-import com.eric_b.mynews.models.TopStoriePojo;
+import com.eric_b.mynews.models.mostpopular.MostPopularPojo;
+import com.eric_b.mynews.models.search.SearchPojo;
+import com.eric_b.mynews.models.topstories.TopStoriePojo;
 import com.eric_b.mynews.utils.TimesStream;
 import org.junit.Test;
 import io.reactivex.Observable;
@@ -58,6 +59,22 @@ public class ReceivingNewsTest {
 
         TopStoriePojo newsFetched = testObserver.values().get(0);
         assertThat("Business receive news.",newsFetched.getNumResults() > 0);
+    }
+
+    @Test
+    public void streamFetchSearchTest() throws Exception {
+        //1 - Get the stream
+        Observable<SearchPojo> observableNews = TimesStream.streamFetchSearchNews("Art Politics Travel Business Sport Environement","US","20000101","20180927");
+        //2 - Create a new TestObserver
+        TestObserver<SearchPojo> testObserver = new TestObserver<>();
+        //3 - Launch observable
+        observableNews.subscribeWith(testObserver)
+                .assertNoErrors()
+                .assertNoTimeout()
+                .awaitTerminalEvent();
+
+        SearchPojo newsFetched = testObserver.values().get(0);
+        assertThat("Search receive news.",newsFetched.getResponse().getMeta().getHits() > 0);
 
     }
 }

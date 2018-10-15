@@ -1,5 +1,5 @@
 
-package com.eric_b.mynews.models;
+package com.eric_b.mynews.models.mostpopular;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

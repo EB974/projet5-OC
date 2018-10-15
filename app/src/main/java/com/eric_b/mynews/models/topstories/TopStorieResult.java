@@ -1,6 +1,7 @@
-package com.eric_b.mynews.models;
+package com.eric_b.mynews.models.topstories;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -56,7 +57,7 @@ public class TopStorieResult {
     private List<Object> geoFacet = null;
     @SerializedName("multimedia")
     @Expose
-    private List<Multimedium> multimedia = null;
+    private List<TopStoriesMultimedium> multimedia = null;
     @SerializedName("short_url")
     @Expose
     private String shortUrl;
@@ -189,11 +190,11 @@ public class TopStorieResult {
         this.geoFacet = geoFacet;
     }
 
-    public List<Multimedium> getMultimedia() {
+    public List<TopStoriesMultimedium> getMultimedia() {
         return multimedia;
     }
 
-    public void setMultimedia(List<Multimedium> multimedia) {
+    public void setMultimedia(List<TopStoriesMultimedium> multimedia) {
         this.multimedia = multimedia;
     }
 

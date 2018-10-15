@@ -1,6 +1,6 @@
 package com.eric_b.mynews.utils;
 
-import com.eric_b.mynews.models.TopStoriePojo;
+import com.eric_b.mynews.models.topstories.TopStoriePojo;
 
 import io.reactivex.Observable;
 import retrofit2.Retrofit;

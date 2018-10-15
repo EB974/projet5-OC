@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.eric_b.mynews.R;
-import com.eric_b.mynews.models.MostPopularPojo;
-import com.eric_b.mynews.models.MostPopularResult;
+import com.eric_b.mynews.models.mostpopular.MostPopularPojo;
+import com.eric_b.mynews.models.mostpopular.MostPopularResult;
 import com.eric_b.mynews.utils.TimesStream;
 import com.eric_b.mynews.views.MostpopularAdapter;
 import com.eric_b.mynews.views.NewsWebView;

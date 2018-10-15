@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.eric_b.mynews.R;
-import com.eric_b.mynews.models.TopStorieResult;
-import com.eric_b.mynews.models.TopStoriePojo;
+import com.eric_b.mynews.models.topstories.TopStorieResult;
+import com.eric_b.mynews.models.topstories.TopStoriePojo;
 import com.eric_b.mynews.utils.TimesStream;
 import com.eric_b.mynews.views.TopStorieAdapter;
 import com.eric_b.mynews.views.NewsWebView;

@@ -1,9 +1,8 @@
 package com.eric_b.mynews.utils;
 
-import android.util.Log;
-
-import com.eric_b.mynews.models.MostPopularPojo;
-import com.eric_b.mynews.models.TopStoriePojo;
+import com.eric_b.mynews.models.mostpopular.MostPopularPojo;
+import com.eric_b.mynews.models.search.SearchPojo;
+import com.eric_b.mynews.models.topstories.TopStoriePojo;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,8 +22,15 @@ public class TimesStream {
 
     public static Observable<MostPopularPojo> streamFetchMostPopularNews() {
         MostPopularService timesServiceMp = MostPopularService.retrofit.create(MostPopularService.class);
-        Log.e("repro","serviceMp "+timesServiceMp.getNews());
         return timesServiceMp.getNews()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
+
+    public static Observable<SearchPojo> streamFetchSearchNews(String category, String term, String beginDate, String endDate) {
+        SearchService timesServiceSc = SearchService.retrofit.create(SearchService.class);
+        return timesServiceSc.getNews(category,term,beginDate,endDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

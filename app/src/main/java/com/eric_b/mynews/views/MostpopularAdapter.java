@@ -1,10 +1,8 @@
 package com.eric_b.mynews.views;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.eric_b.mynews.R;
-import com.eric_b.mynews.models.MediaMetadatum;
-import com.eric_b.mynews.models.Medium;
-import com.eric_b.mynews.models.MostPopularResult;
+import com.eric_b.mynews.models.mostpopular.MediaMetadatum;
+import com.eric_b.mynews.models.mostpopular.Medium;
+import com.eric_b.mynews.models.mostpopular.MostPopularResult;
 import com.eric_b.mynews.utils.DateAdapter;
 
 import java.util.List;
