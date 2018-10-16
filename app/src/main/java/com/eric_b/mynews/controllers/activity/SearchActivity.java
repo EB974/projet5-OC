@@ -26,20 +26,28 @@ import android.widget.Toast;
 import com.eric_b.mynews.R;
 import com.eric_b.mynews.models.search.SearchPojo;
 import com.eric_b.mynews.utils.CastDateSearch;
+import com.eric_b.mynews.utils.CheckboxUtil;
 import com.eric_b.mynews.utils.TimesStream;
 
 import java.util.Calendar;
 import java.util.Objects;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.observers.DisposableObserver;
 
 
 
 public class SearchActivity extends AppCompatActivity {
 
-    //@BindView(R.id.search_activity_term_input) EditText mImputShearch;
-    //@BindView(R.id.search_button) Button mSearchButton;
-    //@BindView(R.id.date_begin_editText) EditText mDateBegin;
+    @BindView(R.id.search_activity_term_input) EditText mImputEditText;
+    @BindView(R.id.search_button) Button mSearchButton;
+    //@SuppressLint("StaticFieldLeak")
+    //@BindView(R.id.date_begin_editText)
+    //static EditText mDateBegin;
+    //@SuppressLint("StaticFieldLeak")
+    //@BindView(R.id.date_end_editText)
+    //static EditText mDateEnd;
 
     private String searchCategory;
     private static String dateSet;
@@ -49,8 +57,8 @@ public class SearchActivity extends AppCompatActivity {
     private static EditText mDateEnd;
     private static String mDBegin;
     private static String mDEnd;
-    private Button mSearchButton;
-    private EditText mImputEditText;
+    //private Button mSearchButton;
+    //private EditText mImputEditText;
     private String mMessage;
     View mView;
 
@@ -59,12 +67,13 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-
+        mView = View.inflate(this,R.layout.activity_search, null);
+        setContentView(mView);
+        ButterKnife.bind(this, mView);
         mDateBegin = findViewById(R.id.date_begin_editText);
         mDateEnd = findViewById(R.id.date_end_editText);
-        mImputEditText = findViewById(R.id.search_activity_term_input);
-        mSearchButton = findViewById(R.id.search_button);
+        //mImputEditText = findViewById(R.id.search_activity_term_input);
+        //mSearchButton = findViewById(R.id.search_button);
         mSearchButton.setEnabled(false);
         this.configureToolbar();
 
@@ -92,22 +101,6 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void readCheckbox(){
-        searchCategory = "";
-        CheckBox chkArt = findViewById(R.id.art_checkbox);
-        CheckBox chkBusiness = findViewById(R.id.business_checkbox);
-        CheckBox chkEnvironment = findViewById(R.id.environment_checkbox);
-        CheckBox chkPolitics = findViewById(R.id.politics_checkbox);
-        CheckBox chkSport = findViewById(R.id.sport_checkbox);
-        CheckBox chkTravel = findViewById(R.id.travel_checkbox);
-        if (chkArt.isChecked()) searchCategory = "Art";
-        if (chkBusiness.isChecked()) searchCategory = searchCategory + " Business";
-        if (chkPolitics.isChecked()) searchCategory = searchCategory + " Politics";
-        if (chkSport.isChecked()) searchCategory = searchCategory + " Sport";
-        if (chkEnvironment.isChecked()) searchCategory = searchCategory + " Environement";
-        if (chkTravel.isChecked()) searchCategory = searchCategory + " Travel";
-    }
-
     private void verification() {
 
         if(mDBegin != null && mDEnd != null) {
@@ -116,7 +109,8 @@ public class SearchActivity extends AppCompatActivity {
                 return;
             }
         }
-        readCheckbox();
+        CheckboxUtil box = new CheckboxUtil(this);
+        searchCategory = box.GetSearchCategory();
         if(searchCategory == null) {
             Toast.makeText(SearchActivity.this, "One category or more must be checked", Toast.LENGTH_LONG).show();
             return;
