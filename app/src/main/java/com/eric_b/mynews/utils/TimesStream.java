@@ -28,9 +28,9 @@ public class TimesStream {
                 .timeout(10, TimeUnit.SECONDS);
     }
 
-    public static Observable<SearchPojo> streamFetchSearchNews(String category, String term, String beginDate, String endDate) {
+    public static Observable<SearchPojo> streamFetchSearchNews(String sort,String category, String term, String beginDate, String endDate) {
         SearchService timesServiceSc = SearchService.retrofit.create(SearchService.class);
-        return timesServiceSc.getNews(category,term,beginDate,endDate)
+        return timesServiceSc.getNews(sort,category,term,beginDate,endDate)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

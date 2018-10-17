@@ -64,7 +64,7 @@ public class ReceivingNewsTest {
     @Test
     public void streamFetchSearchTest() throws Exception {
         //1 - Get the stream
-        Observable<SearchPojo> observableNews = TimesStream.streamFetchSearchNews("Art Politics Travel Business Sport Environement","US","20000101","20180927");
+        Observable<SearchPojo> observableNews = TimesStream.streamFetchSearchNews("newest","Art Politics Travel Business Sport Environement","US","20000101","20180927");
         //2 - Create a new TestObserver
         TestObserver<SearchPojo> testObserver = new TestObserver<>();
         //3 - Launch observable
