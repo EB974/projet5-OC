@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,7 @@ public class MostPopularFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_most_popular, container, false);
         ButterKnife.bind(this, view);
         this.configureSwipeRefreshLayout();
+        Log.d(TAG,"On create view");
         configureRecyclerView();
         if (savedInstanceState!= null) {
             recoverPosition = savedInstanceState.getInt("POSITION");
@@ -101,6 +103,7 @@ public class MostPopularFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        Log.d(TAG,"config recycler");
         mRecyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -120,10 +123,12 @@ public class MostPopularFragment extends BaseFragment {
     }
 
     private void loadAnswers() {
+        Log.d(TAG,"load Answers");
         this.disposable = TimesStream.streamFetchMostPopularNews().subscribeWith(new DisposableObserver<MostPopularPojo>() {
 
             @Override
             public void onNext(MostPopularPojo response) {
+                Log.d(TAG,"load Answers "+response.getNumResults());
                 if (response.getNumResults() > 0) {
                     mAdapter.updateAnswers(response.getResults());
                     updateUI();
@@ -133,16 +138,18 @@ public class MostPopularFragment extends BaseFragment {
             @Override
             public void onError(Throwable e) {
                 //showErrorMessage();
+                Log.e(TAG, "onError() called with: e = [" + e + "]");
             }
 
             @Override
-            public void onComplete() {
+            public void onComplete() { Log.d(TAG,"On Complete !!");
 
             }
         });
     }
 
     private void updateUI(){
+        Log.d(TAG,"updateUI");
         swipeRefreshLayout.setRefreshing(false);
         mAdapter.notifyDataSetChanged();
         mRecyclerView.getLayoutManager().scrollToPosition(recoverPosition);

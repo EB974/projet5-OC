@@ -18,7 +18,7 @@ import com.eric_b.mynews.models.search.SearchDoc;
 import com.eric_b.mynews.models.search.SearchPojo;
 import com.eric_b.mynews.utils.TimesStream;
 import com.eric_b.mynews.views.NewsWebView;
-import com.eric_b.mynews.views.SearchAdapter;
+import com.eric_b.mynews.views.ResultAdapter;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -35,7 +35,7 @@ public class ResultActivity extends AppCompatActivity {
     private Disposable disposable;
     private final String NEWS_URL = "News_URL";
     private static final String TAG = ResultActivity.class.getSimpleName();
-    private SearchAdapter mAdapter;
+    private ResultAdapter mAdapter;
     private String inputTerm;
     private String searchCategory;
     private String searchBegin;
@@ -76,7 +76,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void configureRecyclerView(){
-        this.mAdapter = new SearchAdapter( new ArrayList<SearchDoc>(0), Glide.with(this), new SearchAdapter.PostItemListener() {
+        this.mAdapter = new ResultAdapter( new ArrayList<SearchDoc>(0), Glide.with(this), new ResultAdapter.PostItemListener() {
 
             @Override
             public void onPostClick(String url) {
@@ -104,7 +104,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void loadAnswers() {
-        this.disposable = TimesStream.streamFetchSearchNews("newest",searchCategory,inputTerm,searchBegin,searchEnd).subscribeWith(new DisposableObserver<SearchPojo>() {
+        this.disposable = TimesStream.streamFetchSearchNews("best",searchCategory,inputTerm,searchBegin,searchEnd).subscribeWith(new DisposableObserver<SearchPojo>() {
 
             @Override
             public void onNext(SearchPojo response) {

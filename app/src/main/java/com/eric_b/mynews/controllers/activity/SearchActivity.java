@@ -26,7 +26,6 @@ import android.widget.Toast;
 import com.eric_b.mynews.R;
 import com.eric_b.mynews.models.search.SearchPojo;
 import com.eric_b.mynews.utils.CastDateSearch;
-import com.eric_b.mynews.utils.CheckboxUtil;
 import com.eric_b.mynews.utils.TimesStream;
 
 import java.util.Calendar;
@@ -42,6 +41,12 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.search_activity_term_input) EditText mImputEditText;
     @BindView(R.id.search_button) Button mSearchButton;
+    @BindView(R.id.art_checkbox) CheckBox chkArt;
+    @BindView(R.id.business_checkbox) CheckBox chkBusiness;
+    @BindView(R.id.environment_checkbox) CheckBox chkEnvironment;
+    @BindView(R.id.politics_checkbox) CheckBox chkPolitics;
+    @BindView(R.id.sport_checkbox) CheckBox chkSport;
+    @BindView(R.id.travel_checkbox) CheckBox chkTravel;
     //@SuppressLint("StaticFieldLeak")
     //@BindView(R.id.date_begin_editText)
     //static EditText mDateBegin;
@@ -49,7 +54,6 @@ public class SearchActivity extends AppCompatActivity {
     //@BindView(R.id.date_end_editText)
     //static EditText mDateEnd;
 
-    private String searchCategory;
     private static String dateSet;
     @SuppressLint("StaticFieldLeak")
     private static EditText mDateBegin;
@@ -61,7 +65,7 @@ public class SearchActivity extends AppCompatActivity {
     //private EditText mImputEditText;
     private String mMessage;
     View mView;
-
+    DisposableObserver<SearchPojo> disposable;
 
 
     @Override
@@ -96,31 +100,34 @@ public class SearchActivity extends AppCompatActivity {
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                verification();
+                if (verification()) searchArticle();
             }
         });
     }
 
-    private void verification() {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposeWhenDestroy();
+    }
 
+    private boolean verification() {
+        Boolean check =true;
         if(mDBegin != null && mDEnd != null) {
             if (Integer.parseInt(mDBegin) > Integer.parseInt(mDEnd)) {
                 Toast.makeText(SearchActivity.this, "Begin date must be less than end date", Toast.LENGTH_LONG).show();
-                return;
+                check = false;
             }
         }
-        CheckboxUtil box = new CheckboxUtil(this);
-        searchCategory = box.GetSearchCategory();
-        if(searchCategory == null) {
-            Toast.makeText(SearchActivity.this, "One category or more must be checked", Toast.LENGTH_LONG).show();
-            return;
-        }
-        searchArticle();
 
+        if(readCheckbox() == null) {
+            Toast.makeText(SearchActivity.this, "One category or more must be checked", Toast.LENGTH_LONG).show();
+            check = false;
+        }
+        return check;
     }
 
     public void showAlertDialogButtonClicked(View view) {
-
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(mMessage);
@@ -141,9 +148,19 @@ public class SearchActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
     }
 
+    private String readCheckbox(){
+        String searchCategory =  null;
+        if (chkArt.isChecked()) searchCategory = "Art";
+        if (chkBusiness.isChecked()) searchCategory += " Business";
+        if (chkPolitics.isChecked()) searchCategory += " Politics";
+        if (chkSport.isChecked()) searchCategory +=" Sport";
+        if (chkEnvironment.isChecked()) searchCategory +=" Environement";
+        if (chkTravel.isChecked()) searchCategory += " Travel";
+        return searchCategory;
+    }
+
     public static class  DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
-
 
         @NonNull
         @Override
@@ -166,6 +183,7 @@ public class SearchActivity extends AppCompatActivity {
 
         private void setBeginDate(int day, int month, int year) {
             new CastDateSearch(year, month, day);
+
             mDateBegin.setText(CastDateSearch.getDate());
             mDBegin = CastDateSearch.getDateSearch();
             dateSet = "";
@@ -188,15 +206,14 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchArticle(){
-
-        DisposableObserver<SearchPojo> disposable = TimesStream.streamFetchSearchNews("newest",searchCategory,mImputEditText.getText().toString(),mDBegin,mDEnd).subscribeWith(new DisposableObserver <SearchPojo>() {
+         disposable = TimesStream.streamFetchSearchNews("best",readCheckbox(),mImputEditText.getText().toString(),mDBegin,mDEnd).subscribeWith(new DisposableObserver <SearchPojo>() {
             @Override
             public void onNext(SearchPojo response) {
 
                 if (response.getResponse().getMeta().getHits() > 0) {
                     Intent intent = new Intent(SearchActivity.this, ResultActivity.class);
                     intent.putExtra("inputTerm", mImputEditText.getText().toString());
-                    intent.putExtra("searchCategory", searchCategory);
+                    intent.putExtra("searchCategory", readCheckbox());
                     intent.putExtra("dateBegin", mDBegin);
                     intent.putExtra("dateEnd", mDEnd);
                     startActivity(intent);
@@ -219,5 +236,7 @@ public class SearchActivity extends AppCompatActivity {
 
 
     }
-
+    private void disposeWhenDestroy(){
+        if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
+    }
 }

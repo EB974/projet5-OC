@@ -3,6 +3,7 @@
     package="com.eric_b.mynews">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -29,7 +30,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controllers.activity.MynewsActivity" />
         </activity>
-        <activity android:name=".controllers.activity.ResultActivity"
+        <activity
+            android:name=".controllers.activity.ResultActivity"
             android:label="Results"
             android:parentActivityName=".controllers.activity.MynewsActivity">
 
@@ -38,6 +40,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controllers.activity.MynewsActivity" />
         </activity>
+        <activity
+            android:name=".controllers.activity.NotificationActivity"
+            android:label="Notifications"
+            android:parentActivityName=".controllers.activity.MynewsActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controllers.activity.MynewsActivity" />
+            >
+        </activity>
+        <activity android:name=".controllers.activity.Notifications"></activity>
+
+        <receiver android:name=".utils.MyBroadcastReceiver" >
+        </receiver>
     </application>
 
 </manifest>

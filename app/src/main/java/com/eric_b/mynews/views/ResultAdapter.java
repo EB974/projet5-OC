@@ -3,7 +3,6 @@ package com.eric_b.mynews.views;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,13 @@ import com.eric_b.mynews.utils.DateAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
+public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.ViewHolder> {
 
     private List<SearchDoc> mItems;
     private PostItemListener mItemListener;
     private RequestManager glide;
 
-    public SearchAdapter(ArrayList<SearchDoc> results, RequestManager glide, PostItemListener itemListener) {
+    public ResultAdapter(ArrayList<SearchDoc> results, RequestManager glide, PostItemListener itemListener) {
         mItemListener = itemListener;
         mItems = results;
         this.glide = glide;
@@ -64,7 +63,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @NonNull
     @Override
-    public SearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ResultAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View postView = inflater.inflate(R.layout.news_item, parent, false);
@@ -72,7 +71,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ResultAdapter.ViewHolder holder, int position) {
         SearchDoc item = mItems.get(position);
         List<SearchMultimedium> multimediaItems = item.getMultimedia();
         try {

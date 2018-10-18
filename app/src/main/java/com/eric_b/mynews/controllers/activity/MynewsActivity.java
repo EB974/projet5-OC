@@ -1,11 +1,18 @@
 package com.eric_b.mynews.controllers.activity;
 
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -32,28 +39,32 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     private DrawerLayout drawerLayout;
 
     //FOR FRAGMENTS
-    // 1 - Declare fragment handled by Navigation Drawer
     private Fragment fragmentTop;
     private Fragment fragmentPopular;
     private Fragment fragmentBusiness;
 
     //FOR DATAS
-    // 2 - Identify each fragment with a number
     private static final int FRAGMENT_TOP = 0;
     private static final int FRAGMENT_POPULAR = 1;
     private static final int FRAGMENT_BUSSINESS = 2;
+
+
     private static final String TAG = MynewsActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mynews);
-        // 6 - Configure all views
+
+
+        // - Configure all views
         this.configureToolBar();
         this.configureDrawerLayout();
         this.configureViewPagerAndTabs(0);
         this.configureNavigationView();
     }
+
 
     private void configureViewPagerAndTabs(int setTabs){
         // 1 - Get ViewPager from layout
@@ -113,7 +124,7 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
                 startShearActivity();
                 return true;
             case R.id.menu_activity_mynews_notifications:
-                Toast.makeText(this, "Notif", Toast.LENGTH_LONG).show();
+                startNotificationActivity();
                 return true;
             case R.id.menu_activity_mynews_help:
                 Toast.makeText(this, "Help", Toast.LENGTH_LONG).show();
@@ -236,6 +247,14 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
         Intent intent = new Intent(MynewsActivity.this, SearchActivity.class);
         this.startActivity(intent);
     }
+
+    private void startNotificationActivity(){
+        Intent intent = new Intent(MynewsActivity.this, NotificationActivity.class);
+        startActivity(intent);
+    }
+
+
+
 
 
 }

@@ -1,6 +1,9 @@
 
 package com.eric_b.mynews.models.mostpopular;
 
+import android.util.Log;
+
+import java.lang.reflect.Array;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -202,6 +205,7 @@ public class MostPopularResult {
     public List<Medium> getMedia() {
         return media;
     }
+
 
     public void setMedia(List<Medium> media) {
         this.media = media;

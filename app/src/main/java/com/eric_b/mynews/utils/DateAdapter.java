@@ -8,7 +8,6 @@ public class DateAdapter {
 
     //private static String publishedDate;
     private static String mDate;
-    private static String mDay;
     private static final String TAG = DateAdapter.class.getSimpleName();
 
 
@@ -24,9 +23,8 @@ public class DateAdapter {
         java.util.Date date = new java.util.Date();
         String dayNewsDate = formater.format(date);
 
-        if(dayNewsDate.equals(mDay)){
-            mDay = "today";
-        };
+        if(dayNewsDate.equals(mDay)) mDay = "today";
+
         publishedDate = mDay+" "+mDate.substring(11,16);
         return publishedDate;
     }
@@ -37,17 +35,15 @@ public class DateAdapter {
         else {
             return mDate;
         }
-        mDay = mDate.substring(0, 10);
+        String mDay = mDate.substring(0,10);
 
         String format = "yyyy-MM-dd";
         @SuppressLint("SimpleDateFormat") java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
         java.util.Date date = new java.util.Date();
         String dayNewsDate = formater.format(date);
 
-        if (dayNewsDate.equals(mDay)) {
-            mDay = "today";
-        }
-        String newsDate = mDay;
-        return newsDate;
+        if (dayNewsDate.equals(mDay)) mDay = "today";
+
+        return mDay;
     }
 }
