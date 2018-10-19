@@ -51,7 +51,6 @@
                 android:value=".controllers.activity.MynewsActivity" />
             >
         </activity>
-        <activity android:name=".controllers.activity.Notifications"></activity>
 
         <receiver android:name=".utils.MyBroadcastReceiver" >
         </receiver>
