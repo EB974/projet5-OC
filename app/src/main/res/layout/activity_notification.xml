@@ -16,7 +16,7 @@
         android:id="@+id/notif_activity_term_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search query term"
+        android:hint="@string/Search_query_term"
         android:inputType="text"
         android:paddingLeft="10dp"
         tools:layout_editor_absoluteX="16dp"
@@ -43,7 +43,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:text="Notification disable"/>
+        android:text="@string/Notification_disable" />
 
 
 </LinearLayout>

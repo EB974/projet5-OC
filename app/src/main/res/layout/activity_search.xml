@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +16,7 @@
         android:id="@+id/search_activity_term_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Search query term"
+        android:hint="@string/Search_query_term"
         android:inputType="text"
         android:paddingLeft="10dp"
         tools:layout_editor_absoluteX="16dp"
@@ -32,14 +31,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Begin Date"
+            android:text="@string/Begin_Date"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
             android:layout_marginTop="0dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="End Date"
+            android:text="@string/End_Date"
             android:layout_alignParentTop="true"
             android:layout_marginStart="200dp"
             android:layout_marginTop="0dp"/>
@@ -100,7 +99,7 @@
         android:layout_marginTop="30dp"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
-        android:text="SEARCH" />
+        android:text="@string/Search_button" />
 
 
 

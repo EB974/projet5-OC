@@ -67,10 +67,8 @@ public class ResultActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(title);
-        //ab.setTitle("essai");
-
         assert ab != null;
+        ab.setTitle(title);
         ab.setDisplayHomeAsUpEnabled(true);
 
     }

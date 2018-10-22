@@ -75,8 +75,8 @@ public class NotifBroadcastReceiver extends android.content.BroadcastReceiver {
 
         //createNotification Chanel for Build version Oreo and more
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Personnal Notification";
-            String description = "Include all personnal notification";
+            CharSequence name = "Notification";
+            String description = "Include all notification";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel notificationChannel = new NotificationChannel(CHANEL_ID, name, importance);
             notificationChannel.setDescription(description);
@@ -87,7 +87,7 @@ public class NotifBroadcastReceiver extends android.content.BroadcastReceiver {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, CHANEL_ID);
         builder.setSmallIcon(R.drawable.notification)
                 .setNumber(notifNumber)
-                .setContentTitle(numberArticle+" articles about " + inputTerms)
+                .setContentTitle(numberArticle+ " Articles about " + inputTerms)
                 .setContentText("in " + searchCategory)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)

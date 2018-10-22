@@ -57,7 +57,6 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
         super.onSaveInstanceState(outState);
         int lastFirstVisiblePosition = ((LinearLayoutManager) Objects.requireNonNull(mRecyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
         outState.putInt("POSITION",lastFirstVisiblePosition);
-        Log.d(TAG, "onSaveInstanceState() called with: outState = [" + outState + "]");
     }
 
 // --------------
@@ -89,8 +88,6 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
         if (savedInstanceState!= null) {
             recoverPosition = savedInstanceState.getInt("POSITION");
         }
-        Log.e(TAG,"position "+recoverPosition);
-        Log.d(TAG, "onCreateView() called with: inflater = [" + inflater + "], container = [" + container + "], savedInstanceState = [" + savedInstanceState + "]");
         loadAnswers();
         return view;
     }
@@ -131,7 +128,6 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
                 if (response.getNumResults() > 0) {
                     mAdapter.updateAnswers(response.getResults());
                     updateUI();
-                    Log.d(TAG, "onNext() called with: response = [" + response + "]");
                 }
             }
 
@@ -142,9 +138,7 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
             }
 
             @Override
-            public void onComplete() {
-                Log.d(TAG,"On Complete !!");
-            }
+            public void onComplete() { }
         });
     }
 

@@ -67,7 +67,7 @@ public class NotificationActivity extends AppCompatActivity {
         // get pref from search
         if(mPreferences.getString(PREF_WORD,"").length()>0){
             searchWord = mPreferences.getString(PREF_WORD,null);
-            chechInputTerm(false,true);
+            chechInputTerm(true);
             checkCheckbox();
         }
 
@@ -87,13 +87,13 @@ public class NotificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if(!mSwitchNotification.isEnabled()) {
                     mSwitchNotification.setChecked(false);
-                    mSwitchNotification.setText("Notification disable");
+                    mSwitchNotification.setText(R.string.Notification_disable);
                 }
             }
         });
 
         if (mSwitchNotif){
-            chechInputTerm(false,false);
+            chechInputTerm(false);
             checkCheckbox();
         }
         else {
@@ -104,24 +104,24 @@ public class NotificationActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                         if(CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()).length()==0){
-                        Toast.makeText(NotificationActivity.this, "One category or more must be checked", Toast.LENGTH_LONG).show();
+                        Toast.makeText(NotificationActivity.this, R.string.CheckboxMessage, Toast.LENGTH_LONG).show();
                         mSwitchNotification.setChecked(false);
-                        mSwitchNotification.setText("Notification disable");
+                        mSwitchNotification.setText(R.string.Notification_disable);
                     }else {
-                        mSwitchNotification.setText("Enable notification (once per day)");
+                        mSwitchNotification.setText(R.string.Notification_enable);
                         notificationAlarm(true);
                     }
                 }
                 else {
-                    mSwitchNotification.setText("Notification disable");
+                    mSwitchNotification.setText(R.string.Notification_disable);
                     notificationAlarm(false);
                     }
             }
         });
     }
 
-    private void chechInputTerm(Boolean switchOn, Boolean switchEnable){
-        if (switchOn) mSwitchNotification.setChecked(true);
+    private void chechInputTerm(Boolean switchEnable){
+        mSwitchNotification.setChecked(false);
         if (switchEnable) mSwitchNotification.setEnabled(true);
         mNotifTerm.setText(searchWord);
         mNotifTerm.setSelection(searchWord.length());
@@ -198,9 +198,10 @@ public class NotificationActivity extends AppCompatActivity {
             //Set the alarm hour
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 10);
-            calendar.set(Calendar.MINUTE, 53);
+            calendar.set(Calendar.HOUR_OF_DAY, 13);
+            calendar.set(Calendar.MINUTE, 10);
 
+            assert alarmManager != null;
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
         else{

@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.bumptech.glide.Glide;
 import com.eric_b.mynews.R;
 import com.eric_b.mynews.models.topstories.TopStorieResult;
@@ -21,7 +20,6 @@ import com.eric_b.mynews.views.BusinessAdapter;
 import com.eric_b.mynews.views.NewsWebView;
 import java.util.ArrayList;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import icepick.State;
@@ -57,7 +55,6 @@ public class BusinessFragment extends BaseFragment implements BusinessAdapter.Li
         super.onSaveInstanceState(outState);
         int lastFirstVisiblePosition = ((LinearLayoutManager) Objects.requireNonNull(mRecyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
         outState.putInt("POSITION",lastFirstVisiblePosition);
-        Log.d(TAG, "onSaveInstanceState() called with: outState = [" + outState + "]");
     }
 
 // --------------
@@ -89,8 +86,6 @@ public class BusinessFragment extends BaseFragment implements BusinessAdapter.Li
         if (savedInstanceState!= null) {
             recoverPosition = savedInstanceState.getInt("POSITION");
         }
-        Log.e(TAG,"position "+recoverPosition);
-        Log.d(TAG, "onCreateView() called with: inflater = [" + inflater + "], container = [" + container + "], savedInstanceState = [" + savedInstanceState + "]");
         loadAnswers();
         return view;
     }
@@ -131,7 +126,6 @@ public class BusinessFragment extends BaseFragment implements BusinessAdapter.Li
                 if (response.getNumResults() > 0) {
                     mAdapter.updateAnswers(response.getResults());
                     updateUI();
-                    Log.d(TAG, "onNext() called with: response = [" + response + "]");
                 }
             }
 
@@ -142,9 +136,7 @@ public class BusinessFragment extends BaseFragment implements BusinessAdapter.Li
             }
 
             @Override
-            public void onComplete() {
-                Log.d(TAG,"On Complete !!");
-            }
+            public void onComplete() { }
         });
     }
 

@@ -127,13 +127,13 @@ public class SearchActivity extends AppCompatActivity {
         Boolean check =true;
         if(mDBegin != null && mDEnd != null) {
             if (Integer.parseInt(mDBegin) > Integer.parseInt(mDEnd)) {
-                Toast.makeText(SearchActivity.this, "Begin date must be less than end date", Toast.LENGTH_LONG).show();
+                Toast.makeText(SearchActivity.this, R.string.DateMessage, Toast.LENGTH_LONG).show();
                 check = false;
             }
         }
 
-        if(CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()) == null) {
-            Toast.makeText(SearchActivity.this, "One category or more must be checked", Toast.LENGTH_LONG).show();
+        if(CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()).length() == 0) {
+            Toast.makeText(SearchActivity.this, R.string.CheckboxMessage, Toast.LENGTH_LONG).show();
             check = false;
         }
         return check;
@@ -145,7 +145,7 @@ public class SearchActivity extends AppCompatActivity {
         builder.setMessage(mMessage);
 
         // add a button
-        builder.setPositiveButton("OK", null);
+        builder.setPositiveButton(R.string.Ok, null);
 
         // create and show the alert dialog
         AlertDialog dialog = builder.create();
@@ -213,7 +213,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 if (response.getResponse().getMeta().getHits() > 0) {
                     Intent intent = new Intent(SearchActivity.this, ResultActivity.class);
-                    intent.putExtra("title","Result for " +mImputEditText.getText().toString());
+                    intent.putExtra("title",getText(R.string.Result_for) +mImputEditText.getText().toString());
                     intent.putExtra("inputTerm", mImputEditText.getText().toString());
                     intent.putExtra("searchCategory", CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()));
                     intent.putExtra("dateBegin", mDBegin);
@@ -221,14 +221,14 @@ public class SearchActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
                 else {
-                    mMessage = "No articles containing your search were found";
+                    mMessage = getString(R.string.No_article);
                     showAlertDialogButtonClicked(mView);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                mMessage = "No articles containing your search were found";
+                mMessage = getString(R.string.No_article);
                 showAlertDialogButtonClicked(mView);
             }
 

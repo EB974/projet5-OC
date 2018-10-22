@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="70dp"
         android:layout_marginTop="30dp"
-        android:text="Art" />
+        android:text="@string/Art" />
 
     <CheckBox
         android:id="@+id/politics_checkbox"
@@ -23,7 +23,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="240dp"
         android:layout_marginTop="30dp"
-        android:text="Politics" />
+        android:text="@string/Politics" />
 
     <CheckBox
         android:id="@+id/business_checkbox"
@@ -33,7 +33,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="70dp"
         android:layout_marginTop="80dp"
-        android:text="Business" />
+        android:text="@string/Business" />
 
     <CheckBox
         android:id="@+id/sport_checkbox"
@@ -43,7 +43,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="240dp"
         android:layout_marginTop="80dp"
-        android:text="Sport" />
+        android:text="@string/Sport" />
 
     <CheckBox
         android:id="@+id/environment_checkbox"
@@ -53,7 +53,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="70dp"
         android:layout_marginTop="130dp"
-        android:text="Environment" />
+        android:text="@string/Environment" />
 
     <CheckBox
         android:id="@+id/travel_checkbox"
@@ -63,6 +63,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="240dp"
         android:layout_marginTop="130dp"
-        android:text="Travel" />
+        android:text="@string/Travel" />
 
 </RelativeLayout>

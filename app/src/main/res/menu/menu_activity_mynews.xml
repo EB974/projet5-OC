@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/menu_activity_mynews_notifications"
-        android:title="Notifications"
+        android:title="@string/Notifications"
         app:showAsAction="withText">
     </item>
 
