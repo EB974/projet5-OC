@@ -4,6 +4,7 @@
     <color name="colorPrimary">#42bae2</color>
     <color name="colorPrimaryDark">#309f96</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="itemColor">#3A606E</color>
 
     <color name="accent_material_light" tools:override="true">#45e0eb</color>
     <color name="primary_dark_material_light" tools:override="true">#45e0eb</color>

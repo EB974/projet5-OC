@@ -10,7 +10,6 @@
     tools:openDrawer="start"
     tools:context="com.eric_b.mynews.controllers.activity.MynewsActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,8 +31,6 @@
             app:tabSelectedTextColor="#fff"/>
 
 
-
-
         <android.support.v4.view.ViewPager
             android:id="@+id/activity_mynews_viewpager"
             android:layout_width="match_parent"
@@ -44,9 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-
     </LinearLayout>
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/activity_mynews_nav_view"
@@ -54,8 +49,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:itemTextColor="@color/itemColor"
         app:headerLayout="@layout/activity_mynews_nav_header"
         app:menu="@menu/activity_mynews_menu_drawer" />
-
-
+    
 </android.support.v4.widget.DrawerLayout>
