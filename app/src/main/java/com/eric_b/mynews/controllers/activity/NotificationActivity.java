@@ -3,7 +3,6 @@ package com.eric_b.mynews.controllers.activity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,16 +10,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
-import android.widget.Toolbar;
 import com.eric_b.mynews.R;
-import com.eric_b.mynews.utils.MyBroadcastReceiver;
+import com.eric_b.mynews.utils.CheckboxUtil;
+import com.eric_b.mynews.utils.NotifBroadcastReceiver;
 
 import java.util.Calendar;
 
@@ -40,7 +38,6 @@ public class NotificationActivity extends AppCompatActivity {
     public static final String PREF_ENVIRONMENT = "ENVIRONMENT";
     public static final String PREF_TRAVEL = "TRAVEL";
     private Switch mSwitchNotification;
-    private Toolbar toolbar;
     private SharedPreferences mPreferences;
     private String searchWord;
     private EditText mNotifTerm;
@@ -61,12 +58,18 @@ public class NotificationActivity extends AppCompatActivity {
         ButterKnife.bind(this, mView);
 
         this.configureToolbar();
-        mPreferences = getPreferences(MODE_PRIVATE);
+        mPreferences = getSharedPreferences(PREF_NOTIF,MODE_PRIVATE);
         mSwitchNotification = findViewById(R.id.switch_notification);
         mNotifTerm = findViewById(R.id.notif_activity_term_input);
         mSwitchNotification.setEnabled(false);
         Boolean mSwitchNotif = mPreferences.getBoolean(PREF_SWITCH,false);
-        searchWord = mPreferences.getString(PREF_WORD,null);
+        if(mPreferences.getString(PREF_WORD,"").length()>0){
+            searchWord = mPreferences.getString(PREF_WORD,null);
+            mNotifTerm.setText(searchWord);
+            checkCheckbox();
+            mSwitchNotification.setEnabled(true);
+        }
+
 
         mNotifTerm.addTextChangedListener(new TextWatcher() {
             @Override
@@ -99,20 +102,19 @@ public class NotificationActivity extends AppCompatActivity {
 
         mSwitchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Log.d("Notif","switch "+isChecked);
                 if (isChecked) {
-                    mSwitchNotification.setText("Enable notification (once per day)");
-                    searchWord = mNotifTerm.getText().toString();
-                    Log.d("Notif","go to notif ");
-                    notificationAlarm(true,getApplicationContext());
-                    //Intent intent = new Intent(getApplicationContext(), MyBroadcastReceiver.class);
-                    //intent.putExtra("inputTerm", searchWord);
-                    //intent.putExtra("searchCategory", readCheckbox());
-                    //startActivity(intent);
+                    if(CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()).length()==0){
+                        Toast.makeText(NotificationActivity.this, "One category or more must be checked", Toast.LENGTH_LONG).show();
+                        mSwitchNotification.setChecked(false);
+                        mSwitchNotification.setText("Notification disable");
+                    }else {
+                        mSwitchNotification.setText("Enable notification (once per day)");
+                        notificationAlarm(true);
+                    }
                 }
                 else {
                     mSwitchNotification.setText("Notification disable");
-                    notificationAlarm(false,getApplicationContext());
+                    notificationAlarm(false);
                     }
             }
         });
@@ -173,43 +175,26 @@ public class NotificationActivity extends AppCompatActivity {
         else chkTravel.setChecked(false);
     }
 
-    private String readCheckbox(){
-        String searchCategory =  null;
-        if (chkArt.isChecked()) searchCategory = "Art";
-        if (chkBusiness.isChecked()) searchCategory += " Business";
-        if (chkPolitics.isChecked()) searchCategory += " Politics";
-        if (chkSport.isChecked()) searchCategory +=" Sport";
-        if (chkEnvironment.isChecked()) searchCategory +=" Environement";
-        if (chkTravel.isChecked()) searchCategory += " Travel";
-        Log.d("Notif","searCategory "+searchCategory);
-        return searchCategory;
-    }
-
-
-
-    private void notificationAlarm(boolean alarmOn, Context context) {
+    private void notificationAlarm(boolean alarmOn) {
         AlarmManager alarmMgr = null;
         PendingIntent alarmIntent = null;
 
         if (alarmOn){
-            Intent intent = new Intent(this, MyBroadcastReceiver.class);
+            searchWord = mNotifTerm.getText().toString();
+            Intent intent = new Intent(this, NotifBroadcastReceiver.class);
             intent.putExtra("inputTerm", searchWord);
-            intent.putExtra("searchCategory", readCheckbox());
+            intent.putExtra("searchCategory", CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()));
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
                     this.getApplicationContext(), 234, intent, 0);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (0), pendingIntent);
 
-// Set the alarm to start at 8:30 a.m.
-         //   Calendar calendar = Calendar.getInstance();
-         //   calendar.setTimeInMillis(System.currentTimeMillis());
-         //   calendar.set(Calendar.HOUR_OF_DAY, 7);
-         //   calendar.set(Calendar.MINUTE, 14);
+            //Set the alarm to start at 8:30 a.m.
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            calendar.set(Calendar.HOUR_OF_DAY, 8);
+            calendar.set(Calendar.MINUTE, 06);
 
-// setRepeating() lets you specify a precise custom interval--in this case,
-// 20 minutes.
-         //   alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-         //           1000 * 60 * 3, alarmIntent);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
         else{
             // If the alarm has been set, cancel it.

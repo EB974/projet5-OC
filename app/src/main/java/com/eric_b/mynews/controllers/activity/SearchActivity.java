@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import android.support.v4.app.DialogFragment;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.eric_b.mynews.R;
 import com.eric_b.mynews.models.search.SearchPojo;
 import com.eric_b.mynews.utils.CastDateSearch;
+import com.eric_b.mynews.utils.CheckboxUtil;
 import com.eric_b.mynews.utils.TimesStream;
 
 import java.util.Calendar;
@@ -54,6 +56,17 @@ public class SearchActivity extends AppCompatActivity {
     //@BindView(R.id.date_end_editText)
     //static EditText mDateEnd;
 
+    public static final String PREF_NOTIF = "NOTIF";
+    public static final String PREF_WORD = "SEARCH_WORD" ;
+    public static final String PREF_ART = "ART";
+    public static final String PREF_BUSINESS = "BUSINESS";
+    public static final String PREF_SPORT = "SPORT";
+    public static final String PREF_POLITICS = "POLITICS";
+    public static final String PREF_ENVIRONMENT = "ENVIRONMENT";
+    public static final String PREF_TRAVEL = "TRAVEL";
+    private SharedPreferences mPreferences;
+
+
     private static String dateSet;
     @SuppressLint("StaticFieldLeak")
     private static EditText mDateBegin;
@@ -61,8 +74,6 @@ public class SearchActivity extends AppCompatActivity {
     private static EditText mDateEnd;
     private static String mDBegin;
     private static String mDEnd;
-    //private Button mSearchButton;
-    //private EditText mImputEditText;
     private String mMessage;
     View mView;
     DisposableObserver<SearchPojo> disposable;
@@ -76,8 +87,7 @@ public class SearchActivity extends AppCompatActivity {
         ButterKnife.bind(this, mView);
         mDateBegin = findViewById(R.id.date_begin_editText);
         mDateEnd = findViewById(R.id.date_end_editText);
-        //mImputEditText = findViewById(R.id.search_activity_term_input);
-        //mSearchButton = findViewById(R.id.search_button);
+        mPreferences = getSharedPreferences(PREF_NOTIF,MODE_PRIVATE);
         mSearchButton.setEnabled(false);
         this.configureToolbar();
 
@@ -108,6 +118,8 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPreferences.edit().putString(PREF_WORD,mImputEditText.getText().toString()).apply();
+        memCheckbox();
         disposeWhenDestroy();
     }
 
@@ -120,7 +132,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
 
-        if(readCheckbox() == null) {
+        if(CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()) == null) {
             Toast.makeText(SearchActivity.this, "One category or more must be checked", Toast.LENGTH_LONG).show();
             check = false;
         }
@@ -146,17 +158,6 @@ public class SearchActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         assert ab != null;
         ab.setDisplayHomeAsUpEnabled(true);
-    }
-
-    private String readCheckbox(){
-        String searchCategory =  null;
-        if (chkArt.isChecked()) searchCategory = "Art";
-        if (chkBusiness.isChecked()) searchCategory += " Business";
-        if (chkPolitics.isChecked()) searchCategory += " Politics";
-        if (chkSport.isChecked()) searchCategory +=" Sport";
-        if (chkEnvironment.isChecked()) searchCategory +=" Environement";
-        if (chkTravel.isChecked()) searchCategory += " Travel";
-        return searchCategory;
     }
 
     public static class  DatePickerFragment extends DialogFragment
@@ -206,14 +207,15 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void searchArticle(){
-         disposable = TimesStream.streamFetchSearchNews("best",readCheckbox(),mImputEditText.getText().toString(),mDBegin,mDEnd).subscribeWith(new DisposableObserver <SearchPojo>() {
+         disposable = TimesStream.streamFetchSearchNews("best",CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()),mImputEditText.getText().toString(),mDBegin,mDEnd).subscribeWith(new DisposableObserver <SearchPojo>() {
             @Override
             public void onNext(SearchPojo response) {
 
                 if (response.getResponse().getMeta().getHits() > 0) {
                     Intent intent = new Intent(SearchActivity.this, ResultActivity.class);
+                    intent.putExtra("title","Result for " +mImputEditText.getText().toString());
                     intent.putExtra("inputTerm", mImputEditText.getText().toString());
-                    intent.putExtra("searchCategory", readCheckbox());
+                    intent.putExtra("searchCategory", CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()));
                     intent.putExtra("dateBegin", mDBegin);
                     intent.putExtra("dateEnd", mDEnd);
                     startActivity(intent);
@@ -239,4 +241,21 @@ public class SearchActivity extends AppCompatActivity {
     private void disposeWhenDestroy(){
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
     }
+
+    private void memCheckbox(){
+        if (chkArt.isChecked()) mPreferences.edit().putBoolean(PREF_ART,true).apply();
+        else mPreferences.edit().putBoolean(PREF_ART,false).apply();
+        if (chkBusiness.isChecked()) mPreferences.edit().putBoolean(PREF_BUSINESS,true).apply();
+        else mPreferences.edit().putBoolean(PREF_BUSINESS,false).apply();
+        if (chkPolitics.isChecked()) mPreferences.edit().putBoolean(PREF_POLITICS,true).apply();
+        else mPreferences.edit().putBoolean(PREF_POLITICS,false).apply();
+        if (chkSport.isChecked()) mPreferences.edit().putBoolean(PREF_SPORT,true).apply();
+        else mPreferences.edit().putBoolean(PREF_SPORT,false).apply();
+        if (chkEnvironment.isChecked()) mPreferences.edit().putBoolean(PREF_ENVIRONMENT,true).apply();
+        else mPreferences.edit().putBoolean(PREF_ENVIRONMENT,false).apply();
+        if (chkTravel.isChecked()) mPreferences.edit().putBoolean(PREF_TRAVEL,true).apply();
+        else mPreferences.edit().putBoolean(PREF_TRAVEL,false).apply();
+    }
+
+
 }

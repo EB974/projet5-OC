@@ -18,7 +18,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 
-public class MyBroadcastReceiver extends BroadcastReceiver {
+public class NotifBroadcastReceiver extends android.content.BroadcastReceiver {
 
 
     private static final String CHANEL_ID = "NOTIFICATION";
@@ -65,6 +65,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                 .getSystemService(NOTIFICATION_SERVICE);
         Intent notificationIntent = new Intent(mContext, ResultActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        notificationIntent.putExtra("title", "articles about "+ inputTerms);
         notificationIntent.putExtra("inputTerm", inputTerms);
         notificationIntent.putExtra("searchCategory", searchCategory);
         notificationIntent.putExtra("dateBegin", DateAdapter.today());

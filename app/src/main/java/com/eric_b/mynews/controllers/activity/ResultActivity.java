@@ -36,6 +36,7 @@ public class ResultActivity extends AppCompatActivity {
     private final String NEWS_URL = "News_URL";
     private static final String TAG = ResultActivity.class.getSimpleName();
     private ResultAdapter mAdapter;
+    private CharSequence title;
     private String inputTerm;
     private String searchCategory;
     private String searchBegin;
@@ -47,13 +48,13 @@ public class ResultActivity extends AppCompatActivity {
         View view = View.inflate(this,R.layout.activity_result,null);
         ButterKnife.bind(this, view);
         setContentView(view);
-        this.configureToolbar();
         Intent intent = getIntent();
+        title = intent.getCharSequenceExtra("title");
         inputTerm = intent.getStringExtra("inputTerm");
         searchCategory = intent.getStringExtra("searchCategory");
         searchBegin = intent.getStringExtra("dateBegin");
         searchEnd = intent.getStringExtra("dateEnd");
-
+        this.configureToolbar();
         this.configureSwipeRefreshLayout();
         configureRecyclerView();
         if (savedInstanceState!= null) {
@@ -66,8 +67,12 @@ public class ResultActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
+        ab.setTitle(title);
+        //ab.setTitle("essai");
+
         assert ab != null;
         ab.setDisplayHomeAsUpEnabled(true);
+
     }
     @Override
     protected void onDestroy() {
@@ -111,7 +116,6 @@ public class ResultActivity extends AppCompatActivity {
                 if (response.getResponse().getMeta().getHits() > 0) {
                     mAdapter.updateAnswers(response.getResponse().getDocs());
                     updateUI();
-                    Log.d(TAG, "onNext() called with: response = [" + response + "]");
                 }
             }
 
@@ -122,9 +126,7 @@ public class ResultActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onComplete() {
-                Log.d(TAG,"On Complete !!");
-            }
+            public void onComplete() { }
         });
     }
 

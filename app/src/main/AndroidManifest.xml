@@ -52,7 +52,7 @@
             >
         </activity>
 
-        <receiver android:name=".utils.MyBroadcastReceiver" >
+        <receiver android:name=".utils.NotifBroadcastReceiver" >
         </receiver>
     </application>
 
