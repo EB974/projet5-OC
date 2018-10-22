@@ -63,11 +63,12 @@ public class NotificationActivity extends AppCompatActivity {
         mNotifTerm = findViewById(R.id.notif_activity_term_input);
         mSwitchNotification.setEnabled(false);
         Boolean mSwitchNotif = mPreferences.getBoolean(PREF_SWITCH,false);
+
+        // get pref from search
         if(mPreferences.getString(PREF_WORD,"").length()>0){
             searchWord = mPreferences.getString(PREF_WORD,null);
-            mNotifTerm.setText(searchWord);
+            chechInputTerm(false,true);
             checkCheckbox();
-            mSwitchNotification.setEnabled(true);
         }
 
 
@@ -92,8 +93,7 @@ public class NotificationActivity extends AppCompatActivity {
         });
 
         if (mSwitchNotif){
-            mSwitchNotification.setChecked(true);
-            mNotifTerm.setText(searchWord);
+            chechInputTerm(false,false);
             checkCheckbox();
         }
         else {
@@ -103,7 +103,7 @@ public class NotificationActivity extends AppCompatActivity {
         mSwitchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if(CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()).length()==0){
+                        if(CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()).length()==0){
                         Toast.makeText(NotificationActivity.this, "One category or more must be checked", Toast.LENGTH_LONG).show();
                         mSwitchNotification.setChecked(false);
                         mSwitchNotification.setText("Notification disable");
@@ -118,6 +118,13 @@ public class NotificationActivity extends AppCompatActivity {
                     }
             }
         });
+    }
+
+    private void chechInputTerm(Boolean switchOn, Boolean switchEnable){
+        if (switchOn) mSwitchNotification.setChecked(true);
+        if (switchEnable) mSwitchNotification.setEnabled(true);
+        mNotifTerm.setText(searchWord);
+        mNotifTerm.setSelection(searchWord.length());
     }
 
     private void configureToolbar(){
@@ -188,11 +195,11 @@ public class NotificationActivity extends AppCompatActivity {
                     this.getApplicationContext(), 234, intent, 0);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-            //Set the alarm to start at 8:30 a.m.
+            //Set the alarm hour
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 8);
-            calendar.set(Calendar.MINUTE, 06);
+            calendar.set(Calendar.HOUR_OF_DAY, 10);
+            calendar.set(Calendar.MINUTE, 53);
 
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
