@@ -30,11 +30,21 @@
     <string name="Begin_Date">"Begin Date"</string>
     <string name="End_Date">"End Date"</string>
     <string name="Search_button">"SEARCH"</string>
+    <string name="Skip">"Skip"</string>
+    <string name="Next">"Next"</string>
+    <string name="Finish">"Finish"</string>
+
 
     <string name="Art">"Art"</string>
     <string name="Politics">"Politics"</string>
     <string name="Sport">"Sport"</string>
     <string name="Environment">"Environment"</string>
     <string name="Travel">"Travel"</string>
+
+
+    <string name="Help_01">"Here are the latest New York Times top stories"</string>
+    <string name="Help_02">"Here are the latest New York Times most popular stories"</string>
+
+
 
 </resources>
