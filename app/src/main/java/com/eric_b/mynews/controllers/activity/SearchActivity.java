@@ -157,6 +157,7 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
+        ab.setTitle(getText(R.string.Search_article));
         ab.setDisplayHomeAsUpEnabled(true);
     }
 

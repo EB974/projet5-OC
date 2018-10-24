@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">MyNews</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="search">Search</string>
+
+
+    <string name="categories">Categories</string>
+    <string name="Top_Stories">Top Stories</string>
+    <string name="Most_popular">Most popular</string>
+    <string name="Business">Business</string>
+
+    <string name="News_image">News image</string>
+    <string name="Notifications">Notifications</string>
+    <string name="Search_article">Recherche d\'articles</string>
+    <string name="Help">Aide</string>
+    <string name="About">A propos</string>
+
+    <string name="DateMessage">"La date de début doit être inférieure à la date de fin"</string>
+    <string name="CheckboxMessage">"Une catégorie ou plus doit être cochée"</string>
+    <string name="Ok">"OK"</string>
+    <string name="No_article">"Aucun article contenant votre recherche n'a été trouvé"</string>
+    <string name="Notification_disable">"Notification désactivée"</string>
+    <string name="Notification_enable">"Notification activée (une par jour)"</string>
+    <string name="Articles_about">" articles a propos de "</string>
+    <string name="In">"dans "</string>
+    <string name="Result_for">"Résultats pour "</string>
+    <string name="Search_query_term">"Terme de la recherche"</string>
+    <string name="Begin_Date">"Date de début"</string>
+    <string name="End_Date">"Date de fin"</string>
+    <string name="Search_button">"RECHERCHE"</string>
+    <string name="Skip">"Passer"</string>
+    <string name="Next">"Suivant"</string>
+    <string name="Finish">"Terminé"</string>
+
+
+    <string name="Art">"Art"</string>
+    <string name="Politics">"Politique"</string>
+    <string name="Sport">"Sport"</string>
+    <string name="Environment">"Environement"</string>
+    <string name="Travel">"Voyage"</string>
+
+
+    <string name="Help_01">"Vous trouverez ici les trois principales catégories d'articles du New York Times, Top Stories, Most Popular et Business. Appuyez sur un onglet pour y accéder directement."</string>
+    <string name="Help_02">"Vous pouvez également accéder aux différentes catégories via ce menu."</string>
+    <string name="Help_03">"Pour lire un article, appuyez sur celui qui vous intéresse."</string>
+    <string name="Help_04">"Cette icône vous permet de rechercher des articles dans le New York Times."</string>
+    <string name="Help_05">"Pour effectuer une recherche, entrez des mots-clés et une ou plusieurs catégories (obligatoire). Pour affiner votre recherche, vous pouvez entrer des dates de recherche."</string>
+    <string name="Help_06">"Cette icône vous permet d'accéder aux paramètres de notification, à l'aide (cette présentation) et à propos de."</string>
+    <string name="Help_07">"Pour recevoir des notifications, entrez des mots-clés, une catégorie ou plus, puis activez le commutateur. Si vous avez déjà effectué une recherche, votre recherche est prédéfinie dans la notification, il vous suffit d'activer le bouton.
+Les notifications se font une fois par jour."</string>
+
+</resources>

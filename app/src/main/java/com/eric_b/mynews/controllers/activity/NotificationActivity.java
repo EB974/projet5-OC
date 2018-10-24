@@ -124,7 +124,7 @@ public class NotificationActivity extends AppCompatActivity {
         mSwitchNotification.setChecked(false);
         if (switchEnable) mSwitchNotification.setEnabled(true);
         mNotifTerm.setText(searchWord);
-        mNotifTerm.setSelection(searchWord.length());
+        if (searchWord != null) mNotifTerm.setSelection(searchWord.length());
     }
 
     private void configureToolbar(){

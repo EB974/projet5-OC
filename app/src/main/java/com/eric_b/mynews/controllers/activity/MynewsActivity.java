@@ -48,21 +48,33 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     private static final int FRAGMENT_POPULAR = 1;
     private static final int FRAGMENT_BUSSINESS = 2;
 
+    //FIRST TIME LAUNCH 
+    private static final String PREF_NAME = "welcome_slider";
+    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    private SharedPreferences mFirstLaunchPreference;
 
     private static final String TAG = MynewsActivity.class.getSimpleName();
+    
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mynews);
-
+        
+        firstLaunch();
 
         // - Configure all views
         this.configureToolBar();
         this.configureDrawerLayout();
         this.configureViewPagerAndTabs(0);
         this.configureNavigationView();
+    }
+
+    private void firstLaunch() {
+        mFirstLaunchPreference = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
+        boolean firstTimeLaunch = mFirstLaunchPreference.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+        if (firstTimeLaunch) startHelpActivity();
     }
 
 
@@ -127,7 +139,7 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
                 startNotificationActivity();
                 return true;
             case R.id.menu_activity_mynews_help:
-                Toast.makeText(this, "Help", Toast.LENGTH_LONG).show();
+                startHelpActivity();
                 return true;
             case R.id.menu_activity_mynews_about:
                 Toast.makeText(this, "About", Toast.LENGTH_LONG).show();
@@ -161,12 +173,6 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("repro","toggle clicked");
-            }
-        });
     }
 
 
@@ -253,7 +259,10 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
         startActivity(intent);
     }
 
-
+    private void startHelpActivity(){
+        Intent intent = new Intent(MynewsActivity.this, HelpActivity.class);
+        startActivity(intent);
+    }
 
 
 

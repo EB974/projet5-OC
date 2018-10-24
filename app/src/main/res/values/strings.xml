@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="search">Search</string>
-    <string name="param">Parameters</string>
+
 
     <string name="categories">Categories</string>
     <string name="Top_Stories">Top Stories</string>
@@ -13,6 +13,7 @@
     <string name="Business">Business</string>
 
     <string name="News_image">News image</string>
+    <string name="Search_article">Search article</string>
     <string name="Notifications">Notifications</string>
     <string name="Help">Help</string>
     <string name="About">About</string>
@@ -21,8 +22,8 @@
     <string name="CheckboxMessage">"One category or more must be checked"</string>
     <string name="Ok">"OK"</string>
     <string name="No_article">"No articles containing your search were found"</string>
-    <string name="Notification_disable">"Notification disable"</string>
-    <string name="Notification_enable">"Enable notification (once per day)"</string>
+    <string name="Notification_disable">"Notifications disable"</string>
+    <string name="Notification_enable">"Notifications enable (once per day)"</string>
     <string name="Articles_about">" articles about "</string>
     <string name="In">"in "</string>
     <string name="Result_for">"Result for "</string>
@@ -42,9 +43,14 @@
     <string name="Travel">"Travel"</string>
 
 
-    <string name="Help_01">"Here are the latest New York Times top stories"</string>
-    <string name="Help_02">"Here are the latest New York Times most popular stories"</string>
-
+    <string name="Help_01">"Here you will find the three main categories of New York Times articles, Top Stories, Most Popular and Business. Tap on a tab to access it directly."</string>
+    <string name="Help_02">"You can also access the different categories through this menu."</string>
+    <string name="Help_03">"To read an article tap on the one that interests you."</string>
+    <string name="Help_04">"This icon allows you to search through New York Times articles."</string>
+    <string name="Help_05">"To do a search enter keywords and one or more categories (required). To narrow your search you can enter search dates."</string>
+    <string name="Help_06">"This icon gives you access to the notification settings, help (this presentation), and about."</string>
+    <string name="Help_07">"To receive notifications, enter keywords, a category or more and put the switch on. If you have done a search before, your search is predefined in notification, you just have to activate the switch.
+Notifications are made once a day."</string>
 
 
 </resources>
