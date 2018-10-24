@@ -33,14 +33,14 @@
             android:layout_height="wrap_content"
             android:text="@string/Begin_Date"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/begin_date_margin_left"
             android:layout_marginTop="0dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/End_Date"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="200dp"
+            android:layout_marginStart="@dimen/end_date_margin_left"
             android:layout_marginTop="0dp"/>
             />
 
@@ -51,14 +51,14 @@
             android:ems="6"
             android:inputType="date"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginStart="@dimen/begin_date_margin_left"
+            android:layout_marginTop="@dimen/date_margin_top"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="110dp"
+            android:layout_marginStart="@dimen/left_date_imageButton_margin_left"
             android:layout_marginTop="20dp"
             android:background="@drawable/baseline_arrow_drop_down_black_24dp"
             android:onClick="showDateBeginPickerDialog"/>
@@ -67,17 +67,17 @@
             android:id="@+id/date_end_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="6"
-            android:inputType="date"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginStart="@dimen/end_date_margin_left"
+            android:layout_marginTop="10dp"
+            android:ems="6"
+            android:inputType="date" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="300dp"
+            android:layout_marginStart="@dimen/right_date_imageButton_margin_left"
             android:layout_marginTop="20dp"
             android:background="@drawable/baseline_arrow_drop_down_black_24dp"
             android:onClick="showDateEndPickerDialog"/>
@@ -96,7 +96,7 @@
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/search_Button_margin_top"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:text="@string/Search_button" />

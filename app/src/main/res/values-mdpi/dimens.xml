@@ -3,7 +3,7 @@
 <resources>
     <!-- Default NavigationView Header height -->
     <dimen name="nav_header_height">80dp</dimen>
-    <dimen name="normal_text_size">20sp</dimen>
+    <dimen name="normal_text_size">17sp</dimen>
     <dimen name="normal_toppad_size">40dp</dimen>
 
     <!-- Texts -->
@@ -11,7 +11,7 @@
     <dimen name="date_text_size">14sp</dimen>
 
     <!-- Search activity -->
-    <dimen name="begin_date_margin_left">40dp</dimen>
+    <dimen name="begin_date_margin_left">60dp</dimen>
     <dimen name="date_margin_top">10dp</dimen>
     <dimen name="end_date_margin_left">280dp</dimen>
 
@@ -30,7 +30,6 @@
     <!-- Notification Activity -->
     <dimen name="switch_margin_top">100dp</dimen>
     <dimen name="switch_margin">20dp</dimen>
-
 
     <!-- Help Fragment -->
     <dimen name="help_text_size">22sp</dimen>

@@ -18,18 +18,11 @@
         android:layout_height="wrap_content"
         android:hint="@string/Search_query_term"
         android:inputType="text"
-        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="64dp" />
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp">
-
-
-    </RelativeLayout>
 
     <include
         layout="@layout/check_box_layout"
@@ -40,9 +33,9 @@
         android:id="@+id/switch_notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="@dimen/switch_margin_top"
+        android:layout_marginRight="@dimen/switch_margin"
+        android:layout_marginLeft="@dimen/switch_margin"
         android:text="@string/Notification_disable" />
 
 

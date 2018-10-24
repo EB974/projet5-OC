@@ -203,6 +203,7 @@ public class SearchActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
     public void showDateEndPickerDialog(View v) {
+        dateSet = "End";
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }

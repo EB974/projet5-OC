@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="@dimen/left_checkBox_margin_left"
         android:layout_marginTop="30dp"
         android:text="@string/Art" />
 
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="240dp"
+        android:layout_marginStart="@dimen/right_checkBox_margin_left"
         android:layout_marginTop="30dp"
         android:text="@string/Politics" />
 
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="@dimen/left_checkBox_margin_left"
         android:layout_marginTop="80dp"
         android:text="@string/Business" />
 
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="240dp"
+        android:layout_marginStart="@dimen/right_checkBox_margin_left"
         android:layout_marginTop="80dp"
         android:text="@string/Sport" />
 
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="@dimen/left_checkBox_margin_left"
         android:layout_marginTop="130dp"
         android:text="@string/Environment" />
 
@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="240dp"
+        android:layout_marginStart="@dimen/right_checkBox_margin_left"
         android:layout_marginTop="130dp"
         android:text="@string/Travel" />
 
