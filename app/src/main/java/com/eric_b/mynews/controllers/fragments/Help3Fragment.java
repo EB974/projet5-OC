@@ -1,19 +1,17 @@
 package com.eric_b.mynews.controllers.fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.eric_b.mynews.R;
 
 
-public class Help2Fragment extends BaseFragment {
+public class Help3Fragment extends BaseFragment {
 
 
-    public Help2Fragment() {
+    public Help3Fragment() {
 
     }
 
@@ -40,14 +38,13 @@ public class Help2Fragment extends BaseFragment {
 
     @Override
     protected void updateDesign() {
-
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_help2, container, false);
+        return inflater.inflate(R.layout.fragment_help3, container, false);
     }
 
     @Override

@@ -52,5 +52,5 @@
         app:itemTextColor="@color/itemColor"
         app:headerLayout="@layout/activity_mynews_nav_header"
         app:menu="@menu/activity_mynews_menu_drawer" />
-    
+
 </android.support.v4.widget.DrawerLayout>

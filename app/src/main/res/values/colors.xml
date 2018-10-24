@@ -6,7 +6,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="itemColor">#3A606E</color>
     <color name="textHelpColor">#e4f1f5</color>
-    <color name="textHelpBackground">#c3919394</color>
+    <color name="textHelpBackground">#c81d6183</color>
 
     <color name="accent_material_light" tools:override="true">#45e0eb</color>
     <color name="primary_dark_material_light" tools:override="true">#45e0eb</color>

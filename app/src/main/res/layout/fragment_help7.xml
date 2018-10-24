@@ -3,18 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.fragments.Help2Fragment"
-    android:background="@drawable/help2">
+    tools:context=".controllers.fragments.Help1Fragment"
+    android:background="@drawable/help7">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/normal_text_size"
-        android:textColor="@color/textHelpColor"
-        android:textSize="@dimen/normal_text_size"
+        android:layout_margin="30dp"
+        android:layout_marginTop="350dp"
         android:background="@color/textHelpBackground"
-        android:layout_margin="40dp"
-        android:text="@string/Help_02" />
+        android:padding="@dimen/normal_text_size"
+        android:text="@string/Help_07"
+        android:textColor="@color/textHelpColor"
+        android:textSize="@dimen/normal_text_size" />
+
+
 
 </FrameLayout>

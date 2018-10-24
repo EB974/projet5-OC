@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frame_layout_help1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controllers.fragments.Help1Fragment"
     android:background="@drawable/help1">
 
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_vertical|right"
         android:padding="@dimen/normal_text_size"
         android:textColor="@color/textHelpColor"
-        android:textFontWeight="12sp"
+        android:textSize="@dimen/normal_text_size"
         android:background="@color/textHelpBackground"
+        android:layout_margin="30dp"
+
         android:text="@string/Help_01" />
 
 

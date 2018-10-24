@@ -1,60 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
+<LinearLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/news_item_image"
         android:layout_width="77dp"
         android:layout_height="77dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/News_image"
+        android:padding="3dp"
         android:scaleType="fitXY"
         android:src="@drawable/no_photo"
-        android:background="@android:color/darker_gray"
-        android:padding="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/news_item_title"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/News_image" />
+         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/news_item_date"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="10dp"
+            android:gravity="end"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            />
 
     <TextView
         android:id="@+id/news_item_title"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
+        android:gravity="center_vertical"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="4dp"
-        android:paddingStart="100dp"
+        android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:gravity="start"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textAlignment="viewStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/news_item_date"
-        />
+        tools:textAlignment="left" />
 
-    <TextView
-        android:id="@+id/news_item_date"
-        android:layout_width="200dp"
-        android:layout_height="16dp"
-        android:layout_marginStart="10dp"
-        android:gravity="end"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/news_item_title"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</LinearLayout>
