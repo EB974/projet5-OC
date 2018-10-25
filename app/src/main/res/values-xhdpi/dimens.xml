@@ -7,32 +7,32 @@
     <dimen name="normal_toppad_size">40dp</dimen>
 
     <!-- Texts -->
-    <dimen name="news_text_size">15sp</dimen>
+    <dimen name="news_text_size">16sp</dimen>
     <dimen name="date_text_size">13sp</dimen>
 
     <!-- Search activity -->
-    <dimen name="begin_date_margin_left">10dp</dimen>
+    <dimen name="begin_date_margin_left">30dp</dimen>
     <dimen name="date_margin_top">10dp</dimen>
-    <dimen name="end_date_margin_left">180dp</dimen>
+    <dimen name="end_date_margin_left">210dp</dimen>
 
-    <dimen name="left_date_imageButton_margin_left">110dp</dimen>
-    <dimen name="right_date_imageButton_margin_left">280dp</dimen>
+    <dimen name="left_date_imageButton_margin_left">130dp</dimen>
+    <dimen name="right_date_imageButton_margin_left">310dp</dimen>
 
-    <dimen name="search_Button_margin_top">25dp</dimen>
+    <dimen name="search_Button_margin_top">30dp</dimen>
 
     <!-- Check_box -->
-    <dimen name="left_checkBox_margin_left">30dp</dimen>
-    <dimen name="right_checkBox_margin_left">180dp</dimen>
+    <dimen name="left_checkBox_margin_left">70dp</dimen>
+    <dimen name="right_checkBox_margin_left">220dp</dimen>
     <dimen name="first_line_checkBox_margin_top">25dp</dimen>
     <dimen name="second_line_checkBox_margin_top">75dp</dimen>
     <dimen name="third_line_checkBox_margin_top">125dp</dimen>
 
     <!-- Notification Activity -->
-    <dimen name="switch_margin_top">100dp</dimen>
+    <dimen name="switch_margin_top">90dp</dimen>
     <dimen name="switch_margin">20dp</dimen>
 
     <!-- Help Fragment -->
-    <dimen name="help_text_size">16sp</dimen>
+    <dimen name="help_text_size">18sp</dimen>
 
     <!-- Help1 Fragment -->
     <dimen name="help1_margin_top">150dp</dimen>
@@ -55,7 +55,7 @@
     <dimen name="help4_margin_left">30dp</dimen>
 
     <!-- Help5 Fragment -->
-    <dimen name="help5_margin_top">320dp</dimen>
+    <dimen name="help5_margin_top">380dp</dimen>
     <dimen name="help5_margin_right">30dp</dimen>
     <dimen name="help5_margin_left">30dp</dimen>
 
@@ -65,7 +65,7 @@
     <dimen name="help6_margin_left">30dp</dimen>
 
     <!-- Help7 Fragment -->
-    <dimen name="help7_margin_top">270dp</dimen>
+    <dimen name="help7_margin_top">320dp</dimen>
     <dimen name="help7_margin_right">20dp</dimen>
     <dimen name="help7_margin_left">20dp</dimen>
 </resources>

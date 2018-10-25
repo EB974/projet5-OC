@@ -52,4 +52,5 @@
     <string name="Help_07">"Pour recevoir des notifications, entrez des mots-clés, une catégorie ou plus, puis activez le commutateur. Si vous avez déjà effectué une recherche, votre recherche est prédéfinie dans la notification, il vous suffit d'activer le bouton.
 Les notifications se font une fois par jour."</string>
 
+    <string name="about_text">"Cette aplication a était faite par e.bertaut dans le cadre de la formation DA Android d'OpenClassroom."</string>
 </resources>
