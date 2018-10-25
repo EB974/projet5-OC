@@ -1,38 +1,31 @@
 package com.eric_b.mynews.controllers.activity;
 
-import android.annotation.SuppressLint;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-
-import android.support.v4.app.DialogFragment;
-
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.eric_b.mynews.R;
 import com.eric_b.mynews.models.search.SearchPojo;
 import com.eric_b.mynews.utils.CastDateSearch;
 import com.eric_b.mynews.utils.CheckboxUtil;
 import com.eric_b.mynews.utils.TimesStream;
-
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Objects;
-
+import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.observers.DisposableObserver;
@@ -43,18 +36,16 @@ public class SearchActivity extends AppCompatActivity {
 
     @BindView(R.id.search_activity_term_input) EditText mImputEditText;
     @BindView(R.id.search_button) Button mSearchButton;
+    @BindView(R.id.begin_date_button) ImageButton beginDateButton;
+    @BindView(R.id.end_date_button) ImageButton endDateButton;
     @BindView(R.id.art_checkbox) CheckBox chkArt;
     @BindView(R.id.business_checkbox) CheckBox chkBusiness;
     @BindView(R.id.environment_checkbox) CheckBox chkEnvironment;
     @BindView(R.id.politics_checkbox) CheckBox chkPolitics;
     @BindView(R.id.sport_checkbox) CheckBox chkSport;
     @BindView(R.id.travel_checkbox) CheckBox chkTravel;
-    //@SuppressLint("StaticFieldLeak")
-    //@BindView(R.id.date_begin_editText)
-    //static EditText mDateBegin;
-    //@SuppressLint("StaticFieldLeak")
-    //@BindView(R.id.date_end_editText)
-    //static EditText mDateEnd;
+    @BindView(R.id.date_begin_editText) EditText mDateBegin;
+    @BindView(R.id.date_end_editText) EditText mDateEnd;
 
     public static final String PREF_NOTIF = "NOTIF";
     public static final String PREF_WORD = "SEARCH_WORD" ;
@@ -66,18 +57,13 @@ public class SearchActivity extends AppCompatActivity {
     public static final String PREF_TRAVEL = "TRAVEL";
     private SharedPreferences mPreferences;
 
-
     private static String dateSet;
-    @SuppressLint("StaticFieldLeak")
-    private static EditText mDateBegin;
-    @SuppressLint("StaticFieldLeak")
-    private static EditText mDateEnd;
     private static String mDBegin;
     private static String mDEnd;
     private String mMessage;
     View mView;
     DisposableObserver<SearchPojo> disposable;
-
+    Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -85,7 +71,6 @@ public class SearchActivity extends AppCompatActivity {
         mView = View.inflate(this,R.layout.activity_search, null);
         setContentView(mView);
         ButterKnife.bind(this, mView);
-        mDateBegin = findViewById(R.id.date_begin_editText);
         mDateEnd = findViewById(R.id.date_end_editText);
         mPreferences = getSharedPreferences(PREF_NOTIF,MODE_PRIVATE);
         mSearchButton.setEnabled(false);
@@ -94,7 +79,6 @@ public class SearchActivity extends AppCompatActivity {
         mImputEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -107,12 +91,60 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        beginDateButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   dateSet = "Begin";
+                   new DatePickerDialog(SearchActivity.this, date, myCalendar
+                           .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                           myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+               }
+           });
+
+        endDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateSet = "End";
+                new DatePickerDialog(SearchActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (verification()) searchArticle();
             }
         });
+    }
+
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDate();
+        }
+
+    };
+
+    private void updateDate() {
+        String myFormat = "dd/MM/yy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRENCH);
+        new CastDateSearch(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH)+1,myCalendar.get(Calendar.DAY_OF_MONTH));
+
+        if (dateSet.equals("Begin")) {
+            mDateBegin.setText(sdf.format(myCalendar.getTime()));
+            mDBegin = CastDateSearch.getDateSearch();
+        }
+
+        if (dateSet.equals("End")){
+            mDateEnd.setText(sdf.format(myCalendar.getTime()));
+            mDEnd = CastDateSearch.getDateSearch();
+        }
     }
 
     @Override
@@ -159,53 +191,6 @@ public class SearchActivity extends AppCompatActivity {
         assert ab != null;
         ab.setTitle(getText(R.string.Search_article));
         ab.setDisplayHomeAsUpEnabled(true);
-    }
-
-    public static class  DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(Objects.requireNonNull(getActivity()), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-            if (dateSet.equals("Begin")) setBeginDate(day,month+1,year);
-            else setEndDate(day,month+1,year);
-        }
-
-        private void setBeginDate(int day, int month, int year) {
-            new CastDateSearch(year, month, day);
-
-            mDateBegin.setText(CastDateSearch.getDate());
-            mDBegin = CastDateSearch.getDateSearch();
-            dateSet = "";
-        }
-        private void setEndDate(int day, int month, int year) {
-            new CastDateSearch(year, month, day);
-            mDateEnd.setText(CastDateSearch.getDate());
-            mDEnd = CastDateSearch.getDateSearch();
-        }
-    }
-
-    public void showDateBeginPickerDialog(View v) {
-        dateSet = "Begin";
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-    public void showDateEndPickerDialog(View v) {
-        dateSet = "End";
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     private void searchArticle(){

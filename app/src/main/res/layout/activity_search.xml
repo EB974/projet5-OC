@@ -57,11 +57,12 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/begin_date_button"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/left_date_imageButton_margin_left"
             android:layout_marginTop="20dp"
             android:background="@drawable/baseline_arrow_drop_down_black_24dp"
-            android:onClick="showDateBeginPickerDialog"/>
+            />
 
         <EditText
             android:id="@+id/date_end_editText"
@@ -76,11 +77,12 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/end_date_button"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/right_date_imageButton_margin_left"
             android:layout_marginTop="20dp"
             android:background="@drawable/baseline_arrow_drop_down_black_24dp"
-            android:onClick="showDateEndPickerDialog"/>
+            />
 
     </RelativeLayout>
 

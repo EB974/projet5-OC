@@ -52,5 +52,6 @@
     <string name="Help_07">"To receive notifications, enter keywords, a category or more and put the switch on. If you have done a search before, your search is predefined in notification, you just have to activate the switch.
 Notifications are made once a day."</string>
 
+    <string name="about_text">"This app was made by e.bertaut as part of the Android OpenClassroom AD training."</string>
 
 </resources>
