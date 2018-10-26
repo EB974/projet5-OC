@@ -7,6 +7,8 @@
     <color name="itemColor">#3A606E</color>
     <color name="textHelpColor">#e4f1f5</color>
     <color name="textHelpBackground">#c81d6183</color>
+    <color name="selectedDotColor">#c8b3f5f3</color>
+    <color name="DotColor">#c8cdd1d1</color>
 
     <color name="accent_material_light" tools:override="true">#45e0eb</color>
     <color name="primary_dark_material_light" tools:override="true">#45e0eb</color>

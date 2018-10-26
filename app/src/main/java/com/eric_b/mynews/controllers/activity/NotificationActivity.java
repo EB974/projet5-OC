@@ -202,7 +202,7 @@ public class NotificationActivity extends AppCompatActivity {
             calendar.set(Calendar.MINUTE, 20);
 
             assert alarmManager != null;
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         }
         else{
             // If the alarm has been set, cancel it.

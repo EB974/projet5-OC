@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/activity_help_frame_layout"
@@ -18,19 +17,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom |center"
+        >
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/skip_button"
-        android:layout_gravity="bottom | left"
+        android:layout_gravity="start"
+        android:layout_weight="20"
         android:text="@string/Skip"/>
 
-    <Button
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabDots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/next_button"
-        android:layout_gravity="bottom |right"
-        android:text="@string/Next"/>
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="60"/>
 
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="20"
+            android:text="@string/Next" />
+    </LinearLayout>
 </FrameLayout>

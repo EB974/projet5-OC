@@ -2,6 +2,7 @@ package com.eric_b.mynews.controllers.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -77,6 +78,8 @@ public class HelpActivity extends AppCompatActivity{
 
     private void configureViewPager(){
         viewPager = findViewById(R.id.activity_help_viewpager);
+        TabLayout tabLayout = findViewById(R.id.tabDots);
+        tabLayout.setupWithViewPager(viewPager, true);
         viewPager.setAdapter(new HelpPageAdapter(getSupportFragmentManager()));
     }
 

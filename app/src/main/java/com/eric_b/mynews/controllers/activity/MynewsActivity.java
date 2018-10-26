@@ -1,18 +1,13 @@
 package com.eric_b.mynews.controllers.activity;
 
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -20,11 +15,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.eric_b.mynews.controllers.fragments.BusinessFragment;
 import com.eric_b.mynews.controllers.fragments.MostPopularFragment;
@@ -51,15 +44,16 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     //FIRST TIME LAUNCH 
     private static final String PREF_NAME = "welcome_slider";
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
-    private SharedPreferences mFirstLaunchPreference;
 
-    private static final String TAG = MynewsActivity.class.getSimpleName();
-    
+    private View mView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mView = View.inflate(this,R.layout.activity_search, null);
+        setContentView(mView);
+
         setContentView(R.layout.activity_mynews);
         
         firstLaunch();
@@ -72,8 +66,8 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     }
 
     private void firstLaunch() {
-        mFirstLaunchPreference = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
-        boolean firstTimeLaunch = mFirstLaunchPreference.getBoolean(IS_FIRST_TIME_LAUNCH, true);
+        SharedPreferences firstLaunchPreference = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        boolean firstTimeLaunch = firstLaunchPreference.getBoolean(IS_FIRST_TIME_LAUNCH, true);
         if (firstTimeLaunch) startHelpActivity();
     }
 
@@ -142,7 +136,7 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
                 startHelpActivity();
                 return true;
             case R.id.menu_activity_mynews_about:
-                Toast.makeText(this, "About", Toast.LENGTH_LONG).show();
+                showAlertDialogButtonClicked(mView);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -265,5 +259,16 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     }
 
 
+    public void showAlertDialogButtonClicked(View view) {
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.about_text));
 
+        // add a button
+        builder.setPositiveButton(R.string.Ok, null);
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }

@@ -63,7 +63,7 @@ public class SearchActivity extends AppCompatActivity {
     private String mMessage;
     View mView;
     DisposableObserver<SearchPojo> disposable;
-    Calendar myCalendar = Calendar.getInstance();
+    Calendar mCalendar;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -95,19 +95,21 @@ public class SearchActivity extends AppCompatActivity {
                @Override
                public void onClick(View v) {
                    dateSet = "Begin";
-                   new DatePickerDialog(SearchActivity.this, date, myCalendar
-                           .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                           myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                   mCalendar  = Calendar.getInstance();
+                   new DatePickerDialog(SearchActivity.this, date, mCalendar
+                           .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                           mCalendar.get(Calendar.DAY_OF_MONTH)).show();
                }
-           });
+        });
 
         endDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dateSet = "End";
-                new DatePickerDialog(SearchActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                mCalendar  = Calendar.getInstance();
+                new DatePickerDialog(SearchActivity.this, date, mCalendar
+                        .get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+                        mCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
@@ -123,9 +125,9 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            mCalendar.set(Calendar.YEAR, year);
+            mCalendar.set(Calendar.MONTH, monthOfYear);
+            mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             updateDate();
         }
 
@@ -134,15 +136,15 @@ public class SearchActivity extends AppCompatActivity {
     private void updateDate() {
         String myFormat = "dd/MM/yy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRENCH);
-        new CastDateSearch(myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH)+1,myCalendar.get(Calendar.DAY_OF_MONTH));
+        new CastDateSearch(mCalendar.get(Calendar.YEAR),mCalendar.get(Calendar.MONTH)+1,mCalendar.get(Calendar.DAY_OF_MONTH));
 
         if (dateSet.equals("Begin")) {
-            mDateBegin.setText(sdf.format(myCalendar.getTime()));
+            mDateBegin.setText(sdf.format(mCalendar.getTime()));
             mDBegin = CastDateSearch.getDateSearch();
         }
 
         if (dateSet.equals("End")){
-            mDateEnd.setText(sdf.format(myCalendar.getTime()));
+            mDateEnd.setText(sdf.format(mCalendar.getTime()));
             mDEnd = CastDateSearch.getDateSearch();
         }
     }
