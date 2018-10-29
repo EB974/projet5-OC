@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controllers.activity.NotificationActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
 
     <include
         layout="@layout/toolbar"
@@ -21,7 +24,8 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="64dp" />
+        tools:layout_editor_absoluteY="64dp"
+        />
 
 
     <include

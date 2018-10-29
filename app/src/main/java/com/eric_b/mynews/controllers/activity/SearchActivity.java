@@ -1,9 +1,9 @@
 package com.eric_b.mynews.controllers.activity;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
@@ -74,10 +74,36 @@ public class SearchActivity extends AppCompatActivity {
         mView = View.inflate(this,R.layout.activity_search, null);
         setContentView(mView);
         ButterKnife.bind(this, mView);
-        mDateEnd = findViewById(R.id.date_end_editText);
         mPreferences = getSharedPreferences(PREF_NOTIF,MODE_PRIVATE);
         mSearchButton.setEnabled(false);
         this.configureToolbar();
+
+        mDateBegin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+        mDateEnd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+        mImputEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
 
         mImputEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -250,5 +276,9 @@ public class SearchActivity extends AppCompatActivity {
         else mPreferences.edit().putBoolean(PREF_TRAVEL,false).apply();
     }
 
-
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

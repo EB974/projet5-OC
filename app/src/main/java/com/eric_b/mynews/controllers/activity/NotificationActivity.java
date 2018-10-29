@@ -1,6 +1,7 @@
 package com.eric_b.mynews.controllers.activity;
 
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -10,9 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-
-import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -21,9 +21,6 @@ import android.widget.Toast;
 import com.eric_b.mynews.R;
 import com.eric_b.mynews.utils.CheckboxUtil;
 import com.eric_b.mynews.utils.NotifBroadcastReceiver;
-
-import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -39,10 +36,9 @@ public class NotificationActivity extends AppCompatActivity {
     public static final String PREF_POLITICS = "POLITICS";
     public static final String PREF_ENVIRONMENT = "ENVIRONMENT";
     public static final String PREF_TRAVEL = "TRAVEL";
-    private Switch mSwitchNotification;
     private SharedPreferences mPreferences;
     private String searchWord;
-    private EditText mNotifTerm;
+
 
     @BindView(R.id.art_checkbox) CheckBox chkArt;
     @BindView(R.id.business_checkbox) CheckBox chkBusiness;
@@ -50,7 +46,8 @@ public class NotificationActivity extends AppCompatActivity {
     @BindView(R.id.politics_checkbox) CheckBox chkPolitics;
     @BindView(R.id.sport_checkbox) CheckBox chkSport;
     @BindView(R.id.travel_checkbox) CheckBox chkTravel;
-
+    @BindView(R.id.switch_notification) Switch mSwitchNotification;
+    @BindView(R.id.notif_activity_term_input) EditText mNotifTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +58,17 @@ public class NotificationActivity extends AppCompatActivity {
 
         this.configureToolbar();
         mPreferences = getSharedPreferences(PREF_NOTIF,MODE_PRIVATE);
-        mSwitchNotification = findViewById(R.id.switch_notification);
-        mNotifTerm = findViewById(R.id.notif_activity_term_input);
         mSwitchNotification.setEnabled(false);
-
         chechMemory();
+
+        mNotifTerm.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
 
 
         mNotifTerm.addTextChangedListener(new TextWatcher() {
@@ -124,7 +127,6 @@ public class NotificationActivity extends AppCompatActivity {
                 mSwitchNotification.setChecked(false);
                 notificationAlarm(false);
             }
-
             checkCheckbox();
         }
     }
@@ -144,13 +146,11 @@ public class NotificationActivity extends AppCompatActivity {
         if(mSwitchNotification.isChecked() && searchWord.length() != 0) {
             mPreferences.edit().putBoolean(PREF_SWITCH,true).apply();
             mPreferences.edit().putString(PREF_WORD,searchWord).apply();
-            //mPreferences.edit().commit();
             memCheckbox();
         }
         else {
             mPreferences.edit().putBoolean(PREF_SWITCH,false).apply();
             mPreferences.edit().putString(PREF_WORD,"").apply();
-            //mPreferences.edit().commit();
         }
     }
 
@@ -187,12 +187,10 @@ public class NotificationActivity extends AppCompatActivity {
     private void notificationAlarm(boolean alarmOn) {
 
         searchWord = mNotifTerm.getText().toString();
-        Log.d("Notif","searchWord "+searchWord );
         Intent alarmIntent = new Intent(NotificationActivity.this, NotifBroadcastReceiver.class);
         alarmIntent.putExtra("inputTerms", searchWord);
         alarmIntent.putExtra("searchCategory", CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()));
         PendingIntent pendingIntent = PendingIntent.getBroadcast(NotificationActivity.this, 234, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(NotificationActivity.this, 234, alarmIntent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         if (alarmOn){
@@ -202,5 +200,11 @@ public class NotificationActivity extends AppCompatActivity {
         else{
             if (alarmManager != null) alarmManager.cancel(pendingIntent);
         }
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
