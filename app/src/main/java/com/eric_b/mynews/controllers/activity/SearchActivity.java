@@ -3,6 +3,7 @@ package com.eric_b.mynews.controllers.activity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -48,6 +50,7 @@ public class SearchActivity extends AppCompatActivity {
     @BindView(R.id.date_end_editText) EditText mDateEnd;
 
     public static final String PREF_NOTIF = "NOTIF";
+    public static final String PREF_SWITCH = "SWITCH";
     public static final String PREF_WORD = "SEARCH_WORD" ;
     public static final String PREF_ART = "ART";
     public static final String PREF_BUSINESS = "BUSINESS";
@@ -153,6 +156,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mPreferences.edit().putString(PREF_WORD,mImputEditText.getText().toString()).apply();
+        mPreferences.edit().putBoolean(PREF_SWITCH,true).apply();
         memCheckbox();
         disposeWhenDestroy();
     }

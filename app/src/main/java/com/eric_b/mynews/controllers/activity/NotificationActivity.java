@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -62,14 +64,8 @@ public class NotificationActivity extends AppCompatActivity {
         mSwitchNotification = findViewById(R.id.switch_notification);
         mNotifTerm = findViewById(R.id.notif_activity_term_input);
         mSwitchNotification.setEnabled(false);
-        Boolean mSwitchNotif = mPreferences.getBoolean(PREF_SWITCH,false);
 
-        // get pref from search
-        if(mPreferences.getString(PREF_WORD,"").length()>0){
-            searchWord = mPreferences.getString(PREF_WORD,null);
-            chechInputTerm(true);
-            checkCheckbox();
-        }
+        chechMemory();
 
 
         mNotifTerm.addTextChangedListener(new TextWatcher() {
@@ -92,14 +88,6 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
-        if (mSwitchNotif){
-            chechInputTerm(false);
-            checkCheckbox();
-        }
-        else {
-            mSwitchNotification.setChecked(false);
-        }
-
         mSwitchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -108,6 +96,7 @@ public class NotificationActivity extends AppCompatActivity {
                         mSwitchNotification.setChecked(false);
                         mSwitchNotification.setText(R.string.Notification_disable);
                     }else {
+
                         mSwitchNotification.setText(R.string.Notification_enable);
                         notificationAlarm(true);
                     }
@@ -120,11 +109,24 @@ public class NotificationActivity extends AppCompatActivity {
         });
     }
 
-    private void chechInputTerm(Boolean switchEnable){
-        mSwitchNotification.setChecked(false);
-        if (switchEnable) mSwitchNotification.setEnabled(true);
-        mNotifTerm.setText(searchWord);
-        if (searchWord != null) mNotifTerm.setSelection(searchWord.length());
+    private void chechMemory(){
+        if(mPreferences.getString(PREF_WORD,"").length()>0){
+            searchWord = mPreferences.getString(PREF_WORD,null);
+            mNotifTerm.setText(searchWord);
+            mNotifTerm.setSelection(searchWord.length());
+            mSwitchNotification.setEnabled(true);
+            if (mPreferences.getBoolean(PREF_SWITCH,false)) {
+                mSwitchNotification.setChecked(true);
+                mSwitchNotification.setText(R.string.Notification_enable);
+                notificationAlarm(true);
+            }
+            else {
+                mSwitchNotification.setChecked(false);
+                notificationAlarm(false);
+            }
+
+            checkCheckbox();
+        }
     }
 
     private void configureToolbar(){
@@ -139,7 +141,7 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        if(mSwitchNotification.isChecked() && searchWord != null) {
+        if(mSwitchNotification.isChecked() && searchWord.length() != 0) {
             mPreferences.edit().putBoolean(PREF_SWITCH,true).apply();
             mPreferences.edit().putString(PREF_WORD,searchWord).apply();
             //mPreferences.edit().commit();
@@ -147,7 +149,7 @@ public class NotificationActivity extends AppCompatActivity {
         }
         else {
             mPreferences.edit().putBoolean(PREF_SWITCH,false).apply();
-            mPreferences.edit().putString(PREF_WORD,null).apply();
+            mPreferences.edit().putString(PREF_WORD,"").apply();
             //mPreferences.edit().commit();
         }
     }
@@ -183,30 +185,22 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void notificationAlarm(boolean alarmOn) {
-        AlarmManager alarmMgr = null;
-        PendingIntent alarmIntent = null;
+
+        searchWord = mNotifTerm.getText().toString();
+        Log.d("Notif","searchWord "+searchWord );
+        Intent alarmIntent = new Intent(NotificationActivity.this, NotifBroadcastReceiver.class);
+        alarmIntent.putExtra("inputTerms", searchWord);
+        alarmIntent.putExtra("searchCategory", CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()));
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(NotificationActivity.this, 234, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //PendingIntent pendingIntent = PendingIntent.getBroadcast(NotificationActivity.this, 234, alarmIntent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         if (alarmOn){
-            searchWord = mNotifTerm.getText().toString();
-            Intent intent = new Intent(this, NotifBroadcastReceiver.class);
-            intent.putExtra("inputTerm", searchWord);
-            intent.putExtra("searchCategory", CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()));
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    this.getApplicationContext(), 234, intent, 0);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-            //Set the alarm hour
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.HOUR_OF_DAY, 13);
-            calendar.set(Calendar.MINUTE, 20);
-
             assert alarmManager != null;
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,0, AlarmManager.INTERVAL_DAY, pendingIntent);
         }
         else{
-            // If the alarm has been set, cancel it.
-            if (alarmMgr!= null) alarmMgr.cancel(alarmIntent);
+            if (alarmManager != null) alarmManager.cancel(pendingIntent);
         }
     }
 }

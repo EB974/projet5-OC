@@ -53,9 +53,17 @@
             >
         </activity>
 
-        <receiver android:name=".utils.NotifBroadcastReceiver"></receiver>
+        <receiver
+            android:name=".utils.NotifBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
 
-        <service android:name=".utils.NotifBroadcastReceiver"></service>
+        <service
+            android:name=".utils.NotificationService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
 
         <activity android:name=".controllers.activity.HelpActivity"></activity>
     </application>
