@@ -31,6 +31,9 @@ class NotificationService extends Service {
     Context mContext;
     int notifNumber;
 
+    public NotificationService(){
+        
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
