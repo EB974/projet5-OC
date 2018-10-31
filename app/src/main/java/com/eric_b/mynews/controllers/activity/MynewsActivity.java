@@ -206,8 +206,6 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     }
 
 
-    // ---
-
     private void showTopFragment(){
         if (this.fragmentTop == null) this.fragmentTop = new TopStoriesFragment();
         this.startTransactionFragment(this.fragmentTop,"TopStories");
@@ -228,10 +226,6 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
         configureViewPagerAndTabs(2);
     }
 
-
-    // ---
-
-    // 3 - Generic method that will replace and show a fragment inside the MainActivity Frame Layout
     private void startTransactionFragment(Fragment fragment, String nameFragment){
         if (!fragment.isVisible()){
             getSupportFragmentManager().beginTransaction()
@@ -240,8 +234,8 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     }
 
 //-------------------
-    //Start Activities
-//----------------------
+// Start Activities
+//-------------------
 
     private void startShearActivity(){
         Intent intent = new Intent(MynewsActivity.this, SearchActivity.class);
@@ -258,6 +252,9 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
         startActivity(intent);
     }
 
+//-------------------
+// Dialogue message
+//-------------------
 
     public void showAlertDialogButtonClicked(View view) {
         // setup the alert builder

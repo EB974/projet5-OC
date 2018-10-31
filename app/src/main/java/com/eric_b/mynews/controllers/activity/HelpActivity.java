@@ -30,13 +30,6 @@ public class HelpActivity extends AppCompatActivity{
         firstLaunchPreference.edit().putBoolean(IS_FIRST_TIME_LAUNCH, false).apply();
         this.configureViewPager();
 
-        //this.configureAndShowHelp1Fragment();
-        skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchMynewsActivity();
-            }
-        });
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -55,6 +48,12 @@ public class HelpActivity extends AppCompatActivity{
         }
         );
 
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchMynewsActivity();
+            }
+        });
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
