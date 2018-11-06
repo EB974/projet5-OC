@@ -12,6 +12,7 @@ public interface MostPopularService {
     @GET("svc/mostpopular/v2/mostviewed/all-sections/7.json?api-key=571bed2a4b0d429380eca6b006c553d3")
     Observable<MostPopularPojo> getNews();
 
+    // set retrofit service
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://api.nytimes.com/")
             .addConverterFactory(GsonConverterFactory.create())

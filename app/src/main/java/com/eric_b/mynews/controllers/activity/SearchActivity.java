@@ -71,6 +71,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // create view for ButterKnife
         mView = View.inflate(this,R.layout.activity_search, null);
         setContentView(mView);
         ButterKnife.bind(this, mView);
@@ -78,6 +79,7 @@ public class SearchActivity extends AppCompatActivity {
         mSearchButton.setEnabled(false);
         this.configureToolbar();
 
+        // hide keyboard on tap on screen
         mDateBegin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -112,6 +114,7 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // enable search button if key words are enter
                 mSearchButton.setEnabled(s.toString().length() != 0);
             }
 
@@ -157,37 +160,38 @@ public class SearchActivity extends AppCompatActivity {
             mCalendar.set(Calendar.YEAR, year);
             mCalendar.set(Calendar.MONTH, monthOfYear);
             mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            updateDate();
+            updateDate(); //update date display on screen and prepare for search API
         }
 
     };
 
     private void updateDate() {
-        String myFormat = "dd/MM/yy"; //In which you need put here
+        String myFormat = "dd/MM/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRENCH);
         new CastDateSearch(mCalendar.get(Calendar.YEAR),mCalendar.get(Calendar.MONTH)+1,mCalendar.get(Calendar.DAY_OF_MONTH));
 
         if (dateSet.equals("Begin")) {
-            mDateBegin.setText(sdf.format(mCalendar.getTime()));
-            mDBegin = CastDateSearch.getDateSearch();
+            mDateBegin.setText(sdf.format(mCalendar.getTime())); //display date on screen
+            mDBegin = CastDateSearch.getDateSearch(); // cast the date for search API
         }
 
         if (dateSet.equals("End")){
-            mDateEnd.setText(sdf.format(mCalendar.getTime()));
-            mDEnd = CastDateSearch.getDateSearch();
+            mDateEnd.setText(sdf.format(mCalendar.getTime())); //display date on screen
+            mDEnd = CastDateSearch.getDateSearch(); // cast the date for search API
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        // save keyword and put notification switch off for notification activity
         mPreferences.edit().putString(PREF_WORD,mImputEditText.getText().toString()).apply();
-        mPreferences.edit().putBoolean(PREF_SWITCH,true).apply();
+        mPreferences.edit().putBoolean(PREF_SWITCH,false).apply();
         memCheckbox();
         disposeWhenDestroy();
     }
 
-    private boolean verification() {
+    private boolean verification() { //verify if end date > begin date and if checkbox are checked
         Boolean check =true;
         if(mDBegin != null && mDEnd != null) {
             if (Integer.parseInt(mDBegin) > Integer.parseInt(mDEnd)) {
@@ -203,6 +207,7 @@ public class SearchActivity extends AppCompatActivity {
         return check;
     }
 
+    // display "no article" message in case of no article found or error in search
     public void showAlertDialogButtonClicked(View view) {
         // setup the alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -221,11 +226,10 @@ public class SearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
-        ab.setTitle(getText(R.string.Search_article));
         ab.setDisplayHomeAsUpEnabled(true);
     }
 
-    private void searchArticle(){
+    private void searchArticle(){ // search articles on API
          disposable = TimesStream.streamFetchSearchNews("best",CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()),mImputEditText.getText().toString(),mDBegin,mDEnd).subscribeWith(new DisposableObserver <SearchPojo>() {
             @Override
             public void onNext(SearchPojo response) {
@@ -261,7 +265,7 @@ public class SearchActivity extends AppCompatActivity {
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
     }
 
-    private void memCheckbox(){
+    private void memCheckbox(){ // record the state of checkboxs for notification activity
         if (chkArt.isChecked()) mPreferences.edit().putBoolean(PREF_ART,true).apply();
         else mPreferences.edit().putBoolean(PREF_ART,false).apply();
         if (chkBusiness.isChecked()) mPreferences.edit().putBoolean(PREF_BUSINESS,true).apply();

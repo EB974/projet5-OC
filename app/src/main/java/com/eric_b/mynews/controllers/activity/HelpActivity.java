@@ -38,6 +38,7 @@ public class HelpActivity extends AppCompatActivity{
 
             @Override
             public void onPageSelected(int i) {
+                // set nextButton "finish" instead of "next" on the last fragment
                 if(i>=HelpPageAdapter.getNbOfFragment()-1) nextButton.setText(getString(R.string.Finish));
                 else nextButton.setText(getString(R.string.Next));
             }
@@ -77,7 +78,7 @@ public class HelpActivity extends AppCompatActivity{
 
     private void configureViewPager(){
         viewPager = findViewById(R.id.activity_help_viewpager);
-        TabLayout tabLayout = findViewById(R.id.tabDots);
+        TabLayout tabLayout = findViewById(R.id.tabDots); // display dots on the bottom of the fragment
         tabLayout.setupWithViewPager(viewPager, true);
         viewPager.setAdapter(new HelpPageAdapter(getSupportFragmentManager()));
     }

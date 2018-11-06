@@ -187,7 +187,6 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
     // FRAGMENTS
     // ---------------------
 
-
     private void showFragment(int fragmentIdentifier){
 
          switch (fragmentIdentifier){
@@ -205,20 +204,17 @@ public class MynewsActivity extends AppCompatActivity implements NavigationView.
         }
     }
 
-
     private void showTopFragment(){
         if (this.fragmentTop == null) this.fragmentTop = new TopStoriesFragment();
         this.startTransactionFragment(this.fragmentTop,"TopStories");
         configureViewPagerAndTabs(0);
     }
 
-
     private void showPopularFragment(){
         if (this.fragmentPopular == null) this.fragmentPopular = new MostPopularFragment();
         this.startTransactionFragment(this.fragmentPopular,"MostPopular");
         configureViewPagerAndTabs(1);
     }
-
 
     private void showBusinessFragment(){
         if (this.fragmentBusiness == null) this.fragmentBusiness = new BusinessFragment();

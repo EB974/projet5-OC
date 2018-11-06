@@ -52,6 +52,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // create view for ButterKnife
         View mView = View.inflate(this,R.layout.activity_notification, null);
         setContentView(mView);
         ButterKnife.bind(this, mView);
@@ -59,8 +60,10 @@ public class NotificationActivity extends AppCompatActivity {
         this.configureToolbar();
         mPreferences = getSharedPreferences(PREF_NOTIF,MODE_PRIVATE);
         mSwitchNotification.setEnabled(false);
-        chechMemory();
+        chechMemory(); //recover sharedPreferences memory
 
+
+        // hide keyboard on tap on screen
         mNotifTerm.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -79,11 +82,13 @@ public class NotificationActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // enable notification switch if key words are enter
                 mSwitchNotification.setEnabled(s.toString().length() != 0);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                // put switch on false if key word is delete
                 if(!mSwitchNotification.isEnabled()) {
                     mSwitchNotification.setChecked(false);
                     mSwitchNotification.setText(R.string.Notification_disable);
@@ -94,6 +99,7 @@ public class NotificationActivity extends AppCompatActivity {
         mSwitchNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    // verify if one or more checkbox is checked
                         if(CheckboxUtil.getCategory(chkArt.isChecked(),chkBusiness.isChecked(),chkPolitics.isChecked(),chkSport.isChecked(),chkEnvironment.isChecked(),chkTravel.isChecked()).length()==0){
                         Toast.makeText(NotificationActivity.this, R.string.CheckboxMessage, Toast.LENGTH_LONG).show();
                         mSwitchNotification.setChecked(false);
@@ -121,11 +127,10 @@ public class NotificationActivity extends AppCompatActivity {
             if (mPreferences.getBoolean(PREF_SWITCH,false)) {
                 mSwitchNotification.setChecked(true);
                 mSwitchNotification.setText(R.string.Notification_enable);
-                notificationAlarm(true);
+                notificationAlarm(true); //restarts notification in case of service stop
             }
             else {
                 mSwitchNotification.setChecked(false);
-                notificationAlarm(false);
             }
             checkCheckbox();
         }
@@ -142,7 +147,7 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
+        // save notification screen
         if(mSwitchNotification.isChecked() && searchWord.length() != 0) {
             mPreferences.edit().putBoolean(PREF_SWITCH,true).apply();
             mPreferences.edit().putString(PREF_WORD,searchWord).apply();
@@ -154,7 +159,7 @@ public class NotificationActivity extends AppCompatActivity {
         }
     }
 
-    private void memCheckbox(){
+    private void memCheckbox(){ // record the state of checkboxs
         if (chkArt.isChecked()) mPreferences.edit().putBoolean(PREF_ART,true).apply();
         else mPreferences.edit().putBoolean(PREF_ART,false).apply();
         if (chkBusiness.isChecked()) mPreferences.edit().putBoolean(PREF_BUSINESS,true).apply();
@@ -169,7 +174,7 @@ public class NotificationActivity extends AppCompatActivity {
         else mPreferences.edit().putBoolean(PREF_TRAVEL,false).apply();
     }
 
-    private void checkCheckbox(){
+    private void checkCheckbox(){ // check the checkbox according to the records
         if (mPreferences.getBoolean(PREF_ART,false)) chkArt.setChecked(true);
         else chkArt.setChecked(false);
         if (mPreferences.getBoolean(PREF_BUSINESS,false)) chkBusiness.setChecked(true);
@@ -185,7 +190,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     private void notificationAlarm(boolean alarmOn) {
-
+        // set the alarm manager
         searchWord = mNotifTerm.getText().toString();
         Intent alarmIntent = new Intent(NotificationActivity.this, NotifBroadcastReceiver.class);
         alarmIntent.putExtra("inputTerms", searchWord);
@@ -193,11 +198,11 @@ public class NotificationActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(NotificationActivity.this, 234, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
-        if (alarmOn){
+        if (alarmOn){ //notifications on
             assert alarmManager != null;
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,0, AlarmManager.INTERVAL_DAY, pendingIntent);
         }
-        else{
+        else{ //notification off if it exists
             if (alarmManager != null) alarmManager.cancel(pendingIntent);
         }
     }

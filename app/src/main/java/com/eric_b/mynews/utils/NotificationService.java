@@ -29,10 +29,9 @@ class NotificationService extends Service {
     String inputTerms;
     String searchCategory;
     Context mContext;
-    int notifNumber;
 
     public NotificationService(){
-        
+
     }
 
     @Override
@@ -40,12 +39,10 @@ class NotificationService extends Service {
         mContext = getApplicationContext();
         inputTerms = intent.getStringExtra("serviceInputTerm");
         searchCategory = intent.getStringExtra("searchCategory");
-        Log.d("Notif","inputTerms "+inputTerms );
         newsFound(searchCategory,inputTerms);
-        //new NewsFound(this, intent.getStringExtra("searchCategory"),intent.getStringExtra("inputTerm"));
         return Service.START_STICKY;
     }
-    //@androidx.annotation.Nullable
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -96,7 +93,7 @@ class NotificationService extends Service {
             assert notificationManager != null;
             notificationManager.createNotificationChannel(notificationChannel);
         }
-        //send notifications
+        //set notification before send
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, CHANEL_ID);
         builder.setSmallIcon(R.drawable.notification)
@@ -108,16 +105,19 @@ class NotificationService extends Service {
                 .setAutoCancel(true);
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(mContext);
 
-        if (numberArticle > 0) {
+        if (numberArticle > 0) { // display notification
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                startForeground(NOTIFICATION_ID, builder.build());
+                startForeground(NOTIFICATION_ID, builder.build()); //for oreo and more
                 stopForeground(false);
             }
-            notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+            notificationManagerCompat.notify(NOTIFICATION_ID, builder.build()); // for other build
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                /* for oreo and more
+                   must startForeground() after startForegroundService()
+                   even if no article was found */
                 startForeground(NOTIFICATION_ID, builder.build());
-                stopForeground(true);
+                stopForeground(true); // remove blank notification
             }
         }
 

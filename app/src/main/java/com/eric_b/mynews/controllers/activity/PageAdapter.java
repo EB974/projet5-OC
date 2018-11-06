@@ -34,6 +34,7 @@ class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+        //title of tabs
         String[]  namePage = {"Top Stories","Most Popular","Business"};
         return namePage[position];
     }

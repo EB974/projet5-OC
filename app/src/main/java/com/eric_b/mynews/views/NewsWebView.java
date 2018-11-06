@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,7 +14,6 @@ public class NewsWebView extends AppCompatActivity {
 
     final String NEWS_URL = "News_URL";
     String url;
-    private WebView view;
     private ProgressDialog pd;
 
     @Override
@@ -28,11 +26,10 @@ public class NewsWebView extends AppCompatActivity {
         pd.setMessage("Please wait Loading...");
 
 
-        view = findViewById(R.id.webview);
+        WebView view = findViewById(R.id.webview);
         view.clearCache(true);
 
         view.getSettings().setLoadsImagesAutomatically(true);
-        view.getSettings().setJavaScriptEnabled(true);
         view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         view.canGoBack();
         view.setWebViewClient(new MyBrowser());

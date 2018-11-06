@@ -14,6 +14,7 @@ public interface TopStorieService {
     @GET("svc/topstories/v2/{category}.json?api-key=571bed2a4b0d429380eca6b006c553d3")
     Observable<TopStoriePojo> getNews(@Path("category") String category);
 
+    // set retrofit service
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://api.nytimes.com/")
             .addConverterFactory(GsonConverterFactory.create())

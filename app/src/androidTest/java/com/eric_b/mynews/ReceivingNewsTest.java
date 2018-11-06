@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ReceivingNewsTest {
 
     @Test
-    public void streamFetchTopStoriesTest() throws Exception {
+    public void streamFetchTopStoriesTest() {
         //1 - Get the stream
         Observable<TopStoriePojo> observableNews = TimesStream.streamFetchTopStorieNews("home");
         //2 - Create a new TestObserver
@@ -29,7 +29,7 @@ public class ReceivingNewsTest {
     }
 
     @Test
-    public void streamFetchMostPopularTest() throws Exception {
+    public void streamFetchMostPopularTest() {
         //1 - Get the stream
         Observable<MostPopularPojo> observableNews = TimesStream.streamFetchMostPopularNews();
         //2 - Create a new TestObserver
@@ -46,7 +46,7 @@ public class ReceivingNewsTest {
     }
 
     @Test
-    public void streamFetchBusinessTest() throws Exception {
+    public void streamFetchBusinessTest() {
         //1 - Get the stream
         Observable<TopStoriePojo> observableNews = TimesStream.streamFetchTopStorieNews("business");
         //2 - Create a new TestObserver
@@ -62,7 +62,7 @@ public class ReceivingNewsTest {
     }
 
     @Test
-    public void streamFetchSearchTest() throws Exception {
+    public void streamFetchSearchTest() {
         //1 - Get the stream
         Observable<SearchPojo> observableNews = TimesStream.streamFetchSearchNews("newest","Art Politics Travel Business Sport Environement","US","20000101","20180927");
         //2 - Create a new TestObserver

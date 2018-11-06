@@ -21,10 +21,8 @@ import com.eric_b.mynews.views.TopStorieAdapter;
 import com.eric_b.mynews.views.NewsWebView;
 import java.util.ArrayList;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import icepick.State;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
@@ -36,12 +34,11 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
     @BindView(R.id.topstories_recycler_view) RecyclerView mRecyclerView;
     @BindView(R.id.topstories_fragment_swipe_container) SwipeRefreshLayout swipeRefreshLayout;
 
-    @State Bundle memory;
 
     private Disposable disposable;
     private TopStorieAdapter mAdapter;
     private final String NEWS_URL = "News_URL";
-    private int recoverPosition;
+    private int recoverPosition = 0;
     private static final String TAG = TopStoriesFragment.class.getSimpleName();
     public TopStoriesFragment() {
     }
@@ -56,11 +53,11 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         int lastFirstVisiblePosition = ((LinearLayoutManager) Objects.requireNonNull(mRecyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
-        outState.putInt("POSITION",lastFirstVisiblePosition);
+        outState.putInt("POSITION",lastFirstVisiblePosition); //save the recyclerView position
     }
 
-// --------------
-    // BASE METHODS
+    // --------------
+    // BASEFRAGMENT METHODS
     // --------------
 
     @Override
@@ -85,10 +82,10 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
         ButterKnife.bind(this, view);
         this.configureSwipeRefreshLayout();
         configureRecyclerView();
-        if (savedInstanceState!= null) {
+        if (savedInstanceState!= null) { //recover the recyclerView position
             recoverPosition = savedInstanceState.getInt("POSITION");
         }
-        loadAnswers();
+        loadAnswers(); //load response from TopStories API
         return view;
     }
 
@@ -99,7 +96,7 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
             public void onPostClick(String url) {
                 Intent intent = new Intent(getActivity(),NewsWebView.class);
                 intent = intent.putExtra(NEWS_URL, url);
-                startActivity(intent);
+                startActivity(intent); //read article in a webView
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -125,7 +122,7 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
 
             @Override
             public void onNext(TopStoriePojo response) {
-                if (response.getNumResults() > 0) {
+                if (response.getNumResults() > 0) { // display results if one or more is found
                     mAdapter.updateAnswers(response.getResults());
                     updateUI();
                 }
@@ -142,11 +139,12 @@ public class TopStoriesFragment extends BaseFragment implements TopStorieAdapter
         });
     }
 
-    private void updateUI(){
+    private void updateUI(){ // refresh UI when swipe
         swipeRefreshLayout.setRefreshing(false);
         mAdapter.notifyDataSetChanged();
+        // set recyclerView position
         Objects.requireNonNull(mRecyclerView.getLayoutManager()).scrollToPosition(recoverPosition);
-        recoverPosition = 0;
+        recoverPosition = 0; //initialise recyclerView position after use
     }
 
     private void disposeWhenDestroy(){

@@ -8,8 +8,8 @@ public class CastDateSearch {
     public CastDateSearch(int yy, int mm, int dd) {
         dateSearch=String.valueOf(yy);
         if (mm<10) {
-            dateSearch=dateSearch+"0"+String.valueOf(mm);
-            date = "0"+String.valueOf(mm)+"/";
+            dateSearch=dateSearch+"0"+String.valueOf(mm); //format date for search API
+            date = "0"+String.valueOf(mm)+"/"; //format date for searchActivity
         }
             else {
             dateSearch=dateSearch+String.valueOf(mm);
@@ -28,9 +28,9 @@ public class CastDateSearch {
 
     public static String getDateSearch(){
         return dateSearch;
-    }
+    } //return date for API
 
     public static String getDate(){
         return date;
-    }
+    } //return date for searchActivity
 }

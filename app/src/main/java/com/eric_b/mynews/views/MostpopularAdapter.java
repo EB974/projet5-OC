@@ -23,7 +23,6 @@ public class MostpopularAdapter extends RecyclerView.Adapter<MostpopularAdapter.
     private List<MostPopularResult> mItems;
     private PostItemListener mItemListener;
     private RequestManager glide;
-    private static final String TAG = MostpopularAdapter.class.getSimpleName();
 
     public MostpopularAdapter(List<MostPopularResult> results, RequestManager glide, PostItemListener itemListener) {
         mItemListener = itemListener;
@@ -31,8 +30,7 @@ public class MostpopularAdapter extends RecyclerView.Adapter<MostpopularAdapter.
         this.glide = glide;
     }
 
-    public interface Listeners {
-    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

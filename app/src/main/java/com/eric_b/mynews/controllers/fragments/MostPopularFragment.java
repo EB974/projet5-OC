@@ -25,7 +25,6 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import icepick.State;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
@@ -36,12 +35,11 @@ public class MostPopularFragment extends BaseFragment {
     @BindView(R.id.mostpopular_fragment_swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @State Bundle memory;
 
     private Disposable disposable;
     private MostpopularAdapter mAdapter;
     private final String NEWS_URL = "News_URL";
-    private int recoverPosition;
+    private int recoverPosition = 0;
     private static final String TAG = MostPopularFragment.class.getSimpleName();
     public MostPopularFragment() {
     }
@@ -56,10 +54,10 @@ public class MostPopularFragment extends BaseFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         int lastFirstVisiblePosition = ((LinearLayoutManager) Objects.requireNonNull(mRecyclerView.getLayoutManager())).findFirstCompletelyVisibleItemPosition();
-        outState.putInt("POSITION",lastFirstVisiblePosition);
+        outState.putInt("POSITION",lastFirstVisiblePosition); //save the recyclerView position
     }
 
-// --------------
+    // --------------
     // BASE METHODS
     // --------------
 
@@ -85,10 +83,10 @@ public class MostPopularFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         this.configureSwipeRefreshLayout();
         configureRecyclerView();
-        if (savedInstanceState!= null) {
+        if (savedInstanceState!= null) { //recover the recyclerView position
             recoverPosition = savedInstanceState.getInt("POSITION");
         }
-        loadAnswers();
+        loadAnswers(); //load response from TopStories API
         return view;
     }
 
@@ -99,7 +97,7 @@ public class MostPopularFragment extends BaseFragment {
             public void onPostClick(String url) {
                 Intent intent = new Intent(getActivity(),NewsWebView.class);
                 intent = intent.putExtra(NEWS_URL, url);
-                startActivity(intent);
+                startActivity(intent); //read article in a webView
             }
         });
         mRecyclerView.setAdapter(mAdapter);
@@ -125,7 +123,7 @@ public class MostPopularFragment extends BaseFragment {
 
             @Override
             public void onNext(MostPopularPojo response) {
-                if (response.getNumResults() > 0) {
+                if (response.getNumResults() > 0) { // display results if one or more is found
                     mAdapter.updateAnswers(response.getResults());
                     updateUI();
                 }
@@ -142,11 +140,12 @@ public class MostPopularFragment extends BaseFragment {
         });
     }
 
-    private void updateUI(){
+    private void updateUI(){ // refresh UI when swipe
         swipeRefreshLayout.setRefreshing(false);
         mAdapter.notifyDataSetChanged();
+        // set recyclerView position
         Objects.requireNonNull(mRecyclerView.getLayoutManager()).scrollToPosition(recoverPosition);
-        recoverPosition = 0;
+        recoverPosition = 0; //initialise recyclerView position after use
     }
 
     private void disposeWhenDestroy(){

@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class TimesStream {
 
+    //retrieve article list from TopStories API
     public static Observable<TopStoriePojo> streamFetchTopStorieNews(String category) {
         TopStorieService timesServiceTs = TopStorieService.retrofit.create(TopStorieService.class);
         return timesServiceTs.getNews(category)
@@ -20,6 +21,7 @@ public class TimesStream {
                 .timeout(10, TimeUnit.SECONDS);
     }
 
+    //retrieve article list from MostPopular API
     public static Observable<MostPopularPojo> streamFetchMostPopularNews() {
         MostPopularService timesServiceMp = MostPopularService.retrofit.create(MostPopularService.class);
         return timesServiceMp.getNews()
@@ -28,6 +30,7 @@ public class TimesStream {
                 .timeout(10, TimeUnit.SECONDS);
     }
 
+    //retrieve article list from Search API
     public static Observable<SearchPojo> streamFetchSearchNews(String sort,String category, String term, String beginDate, String endDate) {
         SearchService timesServiceSc = SearchService.retrofit.create(SearchService.class);
         return timesServiceSc.getNews(sort,category,term,beginDate,endDate)

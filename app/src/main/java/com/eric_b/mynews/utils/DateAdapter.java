@@ -3,13 +3,14 @@ package com.eric_b.mynews.utils;
 import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class DateAdapter {
 
 
     //private static String publishedDate;
     private static String mDate;
-    private static final String TAG = DateAdapter.class.getSimpleName();
+    //private static final String TAG = DateAdapter.class.getSimpleName();
 
 
     public static String getDateTopStories(String publishedDate){
@@ -42,14 +43,14 @@ public class DateAdapter {
         return mDay;
     }
 
-        public static String today() {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        static String today() { //set today date for notification
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd",Locale.FRENCH);
             Calendar today = Calendar.getInstance();
             return sdf.format(today.getTimeInMillis());
         }
 
-        public static String tomorrow() {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        static String tomorrow() {//set tomorrow date for notification
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd",Locale.FRENCH);
             Calendar tomorrow = Calendar.getInstance();
             tomorrow.add(Calendar.DATE, 1);
             return sdf.format(tomorrow.getTimeInMillis());

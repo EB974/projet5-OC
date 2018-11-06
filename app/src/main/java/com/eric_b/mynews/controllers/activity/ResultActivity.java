@@ -60,7 +60,7 @@ public class ResultActivity extends AppCompatActivity {
         if (savedInstanceState!= null) {
             recoverPosition = savedInstanceState.getInt("POSITION");
         }
-        loadAnswers();
+        loadAnswers(); //load response from search API
 
     }
     private void configureToolbar(){
@@ -68,7 +68,7 @@ public class ResultActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar ab = getSupportActionBar();
         assert ab != null;
-        ab.setTitle(title);
+        ab.setTitle(title); // set the title of the toolbar according to notification or search
         ab.setDisplayHomeAsUpEnabled(true);
 
     }
@@ -112,6 +112,7 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onNext(SearchPojo response) {
                 if (response.getResponse().getMeta().getHits() > 0) {
+                    // display answers if one or more is found
                     mAdapter.updateAnswers(response.getResponse().getDocs());
                     updateUI();
                 }
@@ -129,6 +130,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void updateUI(){
+        // refresh UI when swipe
         swipeRefreshLayout.setRefreshing(false);
         mAdapter.notifyDataSetChanged();
         Objects.requireNonNull(mRecyclerView.getLayoutManager()).scrollToPosition(recoverPosition);
