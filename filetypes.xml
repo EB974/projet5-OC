@@ -1,6 +1,7 @@
 <application>
   <component name="FileTypeManager" version="17">
     <extensionMap>
+      <mapping pattern="Note_Essai01-journal" type="PLAIN_TEXT" />
       <mapping pattern="Note_Essai01" type="SQL" />
       <mapping pattern="tab_indicator_default" type="XML" />
       <mapping pattern="dimen-xhdpi" type="XML" />
