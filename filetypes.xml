@@ -1,14 +1,16 @@
 <application>
   <component name="FileTypeManager" version="17">
     <extensionMap>
-      <mapping pattern="Note_Essai01-journal" type="PLAIN_TEXT" />
       <mapping pattern="ArticleColors" type="PLAIN_TEXT" />
+      <mapping pattern="GiftColors" type="PLAIN_TEXT" />
+      <mapping pattern="Note_Essai01-journal" type="PLAIN_TEXT" />
+      <mapping pattern="GiftColors-journal" type="SQL" />
       <mapping pattern="Note_Essai01" type="SQL" />
+      <mapping pattern="tab_selector" type="XML" />
+      <mapping pattern="Button_radius_facebook" type="XML" />
+      <mapping pattern="tab_indicator_selected" type="XML" />
       <mapping pattern="tab_indicator_default" type="XML" />
       <mapping pattern="dimen-xhdpi" type="XML" />
-      <mapping pattern="tab_indicator_selected" type="XML" />
-      <mapping pattern="Button_radius_facebook" type="XML" />
-      <mapping pattern="tab_selector" type="XML" />
     </extensionMap>
   </component>
 </application>
