@@ -3,6 +3,7 @@
     <extensionMap>
       <mapping pattern="ArticleColors" type="PLAIN_TEXT" />
       <mapping pattern="GiftColors" type="PLAIN_TEXT" />
+      <mapping pattern="Note_Essai" type="PLAIN_TEXT" />
       <mapping pattern="Note_Essai01-journal" type="PLAIN_TEXT" />
       <mapping pattern="BaseGift" type="SQL" />
       <mapping pattern="GiftColors-journal" type="SQL" />
